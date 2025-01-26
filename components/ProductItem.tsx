@@ -6,6 +6,7 @@ import AddToCartButton from "./AddToCartButton";
 
 export default async function ProductItem(book: Book) {
   const verifyUser = await verifySession();
+
   return (
     <div className=" rounded-lg shadow-md bg-white hover:shadow-lg transition-shadow duration-300 flex flex-col">
       {/* Book Image */}
@@ -51,7 +52,8 @@ export default async function ProductItem(book: Book) {
           >
             See More →
           </Link>
-          <AddToCartButton verifyUser={verifyUser ? true : false} />
+
+          {verifyUser ? <AddToCartButton {...book} /> : ""}
         </div>
       </div>
     </div>

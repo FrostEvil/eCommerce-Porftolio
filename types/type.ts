@@ -27,3 +27,15 @@ export type Book = {
   coverImageUrl: string;
   description: string;
 };
+
+export type CartBook = {
+  id: number;
+  title: string;
+  author: string;
+  genre: string;
+  price: number;
+  stockQuantity: number;
+  coverImageUrl: string;
+  quantity: number;
+  endingPrice: number;
+};

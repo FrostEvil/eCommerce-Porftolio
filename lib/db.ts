@@ -43,4 +43,10 @@ function initDb() {
 
 initDb();
 
+//Cart
+
+db.prepare(
+  `CREATE TABLE IF NOT EXISTS cart(id INTEGER PRIMARY KEY, title TEXT UNIQUE, author TEXT, genre TEXT, price NUMBER, stockQuantity NUMBER, coverImageUrl TEXT, quantity NUMBER, endingPrice NUMBER)`
+).run();
+
 export default db;

@@ -1,4 +1,5 @@
 import { getSingleBook } from "@/lib/books";
+import { verifySession } from "@/lib/session";
 import { Book } from "@/types/type";
 import { checkCurrentPage } from "@/utils/checkCurrentPage";
 import Image from "next/image";
@@ -10,6 +11,7 @@ type ParamsType = {
 
 export default async function SingleProduct({ params }: ParamsType) {
   const slug = (await params).slug;
+  const verifyUser = await verifySession();
   const {
     title,
     author,
@@ -81,9 +83,13 @@ export default async function SingleProduct({ params }: ParamsType) {
               <span className="text-sm text-gray-500">
                 Stock: {stockQuantity}
               </span>
-              <button className="ml-4 bg-green-500 text-white text-lg font-semibold py-2 px-6 rounded-lg shadow hover:bg-green-600 hover:shadow-md transition duration-300">
-                Add to Cart
-              </button>
+              {verifyUser ? (
+                <button className="ml-4 bg-green-500 text-white text-lg font-semibold py-2 px-6 rounded-lg shadow hover:bg-green-600 hover:shadow-md transition duration-300">
+                  Add to Cart
+                </button>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>
