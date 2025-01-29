@@ -1,9 +1,16 @@
 import CartItem from "@/components/CartItem";
+import CartItemsSummary from "@/components/CartItemsSummary";
 import { getAllCartBooks } from "@/lib/cart";
+import { CartBook } from "@/types/type";
+import calculateCartSummary from "@/utils/calculateCartSummary";
+import userSessionId from "@/utils/userSessionId";
 
-export default function CartPage() {
-  const CartBooks = getAllCartBooks();
+export default async function CartPage() {
+  const userId = await userSessionId();
+  console.log("userId", userId);
+  const CartBooks = getAllCartBooks(userId);
 
+  const CartSummaryValues = await calculateCartSummary();
   return (
     <main className="container mx-auto px-6 py-12">
       <div>
@@ -16,21 +23,16 @@ export default function CartPage() {
           step away!
         </p>
       </div>
-      <div className=" bg-white grid grid-cols-5">
-        <div className="col-span-3">
+      <div className=" grid grid-cols-5 gap-x-8">
+        <div className="col-span-3 bg-white">
           {CartBooks
-            ? CartBooks.map((book) => {
-                return <CartItem {...book} key={book.id} />;
+            ? CartBooks.map((cartBook: CartBook) => {
+                return <CartItem {...cartBook} key={cartBook.id} />;
               })
             : ""}
         </div>
-        <div className="bg-orange-400 col-span-2">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum
-          eius inventore repellat. Amet, aliquam repudiandae culpa officia ipsa
-          dignissimos cupiditate neque recusandae tempore facilis fuga ut
-          perferendis dolore, nesciunt, pariatur totam cum illum. Facere
-          deserunt tenetur eius omnis. Nulla quibusdam eveniet odit similique
-          vel beatae earum eius excepturi ab ut?
+        <div className="bg-white col-span-2">
+          <CartItemsSummary {...CartSummaryValues} />
         </div>
       </div>
     </main>

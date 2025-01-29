@@ -1,65 +1,84 @@
-import { Book, CartBook } from "@/types/type";
+import { ManageUserCartBook, Book, CartBook, UserSession } from "@/types/type";
 import db from "./db";
 
-function getSelectedBook(id: CartBook["id"]) {
-  const stmt = db.prepare("SELECT * FROM cart WHERE id=?");
-  const result = stmt.get(id);
-  return result;
+//Get seleceted book from cart db
+export function getSelectedBook({
+  id,
+  userId,
+}: {
+  id: Book["id"];
+  userId: UserSession["userId"];
+}) {
+  try {
+    const stmt = db.prepare("SELECT * FROM cart WHERE id=? AND userId=?");
+    const result = stmt.get(id, userId) as CartBook;
+    return result;
+  } catch (error) {
+    console.error("Book does not exist on your cart:", error);
+  }
 }
 
-function addBookToDb(book: Book) {
+//Add book to cart db
+function addBookToDb({ book, userId }: ManageUserCartBook) {
   const insert = db.prepare(
-    "INSERT INTO cart (id, title, author, genre, price, stockQuantity, coverImageUrl, quantity, endingPrice) VALUES (?,?,?,?,?,?,?,?,?)"
+    "INSERT INTO cart (userId, id,  quantity, endingPrice) VALUES (?,?,?,?)"
   );
 
-  insert.run(
-    book.id,
-    book.title,
-    book.author,
-    book.genre,
-    book.price,
-    book.stockQuantity,
-    book.coverImageUrl,
-    1,
-    book.price
-  );
+  insert.run(userId, book.id, 1, book.price);
 }
 
-export function increaseCartBookQuantity(book: Book) {
-  const cartBook = getSelectedBook(book.id) as CartBook;
+//Check if selected book exists in cart db, if not adding to db, otherwise update quantity and ending price
+export function increaseCartBookQuantity({ book, userId }: ManageUserCartBook) {
+  const cartBook = getSelectedBook({ id: book.id, userId });
 
   if (!cartBook) {
-    addBookToDb(book);
+    addBookToDb({ book, userId });
     return;
   }
 
-  const newQuantity: number = cartBook.quantity + 1;
-  const newEndingPrice: number = cartBook.price * newQuantity;
+  const newQuantity: number = parseFloat((cartBook.quantity + 1).toFixed(2));
+  const newEndingPrice: number = parseFloat(
+    (book.price * newQuantity).toFixed(2)
+  );
 
   const updateBookCart = db.prepare(
-    "UPDATE cart SET quantity = ?, endingPrice = ? WHERE id = ? "
+    "UPDATE cart SET quantity = ?, endingPrice = ? WHERE id = ? and userId = ?"
   );
-  updateBookCart.run(newQuantity, newEndingPrice, cartBook.id);
-}
-
-export function decreaseCartBookQuantity(book: Book) {
-  const cartBook = getSelectedBook(book.id) as CartBook;
-
-  if (!cartBook) {
-    addBookToDb(book);
-    return;
+  const result = updateBookCart.run(
+    newQuantity,
+    newEndingPrice,
+    cartBook.id,
+    userId
+  );
+  if (result) {
+    console.log("Succesfully added!");
   }
-
-  const newQuantity: number = cartBook.quantity - 1;
-  const newEndingPrice: number = cartBook.price * newQuantity;
-
-  const updateBookCart = db.prepare(
-    "UPDATE cart SET quantity = ?, endingPrice = ? WHERE id = ? "
-  );
-  updateBookCart.run(newQuantity, newEndingPrice, cartBook.id);
 }
 
-export function getAllCartBooks() {
-  const cartBooks = db.prepare("SELECT * FROM cart").all();
+// Update quantity and ending price, here we can assume that when we invoke this function selected book already exists in cart db
+export function decreaseCartBookQuantity({ book, userId }: ManageUserCartBook) {
+  const cartBook = getSelectedBook({ id: book.id, userId });
+  if (!cartBook) return;
+  const newQuantity: number = parseFloat((cartBook.quantity - 1).toFixed(2));
+  const newEndingPrice: number = parseFloat(
+    (book.price * newQuantity).toFixed(2)
+  );
+
+  const updateBookCart = db.prepare(
+    "UPDATE cart SET quantity = ?, endingPrice = ? WHERE id = ? AND userId = ? "
+  );
+  updateBookCart.run(newQuantity, newEndingPrice, cartBook.id, userId);
+}
+
+//delete book from cart db
+export function deleteFromCartBook(id: CartBook["id"]) {
+  const stmt = db.prepare("DELETE FROM cart WHERE id = ?");
+  stmt.run(id);
+}
+
+export function getAllCartBooks(userId: UserSession["userId"]) {
+  const stmt = db.prepare("SELECT * FROM cart WHERE userId = ?");
+  const cartBooks = stmt.all(userId);
+
   return cartBooks as CartBook[];
 }

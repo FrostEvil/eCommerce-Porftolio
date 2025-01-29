@@ -2,8 +2,6 @@ import { fetchSelectedBooks } from "@/actions/selected-books-actions";
 import Pagination from "@/components/Pagination";
 import ProductItem from "@/components/ProductItem";
 
-// const PAGE_SIZE = 6;
-
 export default async function ProductsPage({
   searchParams,
 }: {

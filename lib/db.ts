@@ -46,7 +46,12 @@ initDb();
 //Cart
 
 db.prepare(
-  `CREATE TABLE IF NOT EXISTS cart(id INTEGER PRIMARY KEY, title TEXT UNIQUE, author TEXT, genre TEXT, price NUMBER, stockQuantity NUMBER, coverImageUrl TEXT, quantity NUMBER, endingPrice NUMBER)`
+  `CREATE TABLE IF NOT EXISTS cart(userId NUMBER, id INTEGER, quantity NUMBER, endingPrice NUMBER, FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE)`
+).run();
+
+//Session
+db.prepare(
+  "CREATE TABLE IF NOT EXISTS sessions(userId NUMBER, session STRING)"
 ).run();
 
 export default db;

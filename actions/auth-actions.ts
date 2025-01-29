@@ -5,6 +5,8 @@ import { createSession, deleteSession } from "@/lib/session";
 import { createUser, getUserByEmail } from "@/lib/users";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { createUserSession } from "./session-actions";
+import { User } from "@/types/type";
 
 interface SqliteError extends Error {
   code: string;
@@ -86,7 +88,8 @@ export async function login(prevState: any, formData: FormData) {
     };
   }
 
-  await createSession(existingUser.id!);
+  const session = await createSession(existingUser.id!);
+  createUserSession(existingUser.id, session);
 
   redirect("/products");
 }

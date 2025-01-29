@@ -4,13 +4,13 @@ export type LinksType = {
 };
 
 export type User = {
-  id?: string;
+  id: number;
   email: string;
   password: string;
 };
 
 export type SessionPayload = {
-  userId: string;
+  userId: number;
   expiresAt: Date;
 };
 
@@ -29,13 +29,22 @@ export type Book = {
 };
 
 export type CartBook = {
+  userId: number;
   id: number;
-  title: string;
-  author: string;
-  genre: string;
-  price: number;
-  stockQuantity: number;
-  coverImageUrl: string;
   quantity: number;
   endingPrice: number;
+};
+
+export type UserSession = {
+  userId: number;
+  session: string;
+};
+
+export type ManageUserCartBook = {
+  userId: number;
+  book: Book;
+};
+
+export type UseCartManagementType = ManageUserCartBook & {
+  cartBook: CartBook | undefined;
 };

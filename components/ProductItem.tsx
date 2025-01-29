@@ -3,10 +3,13 @@ import { Book } from "@/types/type";
 import Image from "next/image";
 import Link from "next/link";
 import AddToCartButton from "./AddToCartButton";
+import userSessionId from "@/utils/userSessionId";
+import { getSelectedCartBook } from "@/actions/cart-actions";
 
 export default async function ProductItem(book: Book) {
   const verifyUser = await verifySession();
-
+  const userId = await userSessionId();
+  const cartBook = await getSelectedCartBook(book.id, userId);
   return (
     <div className=" rounded-lg shadow-md bg-white hover:shadow-lg transition-shadow duration-300 flex flex-col">
       {/* Book Image */}
@@ -48,12 +51,16 @@ export default async function ProductItem(book: Book) {
         <div className="flex justify-between items-center mt-2">
           <Link
             href={`/products/${book.id}`}
-            className="bg-blue-500 text-white text-sm font-semibold py-1.5 px-4 rounded hover:bg-blue-600 transition duration-300"
+            className="bg-blue-500 text-white text-sm font-semibold py-1.5 px-4 rounded hover:bg-blue-600 transition-all duration-300"
           >
             See More →
           </Link>
 
-          {verifyUser ? <AddToCartButton {...book} /> : ""}
+          {verifyUser ? (
+            <AddToCartButton {...{ book, userId, cartBook }} />
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>

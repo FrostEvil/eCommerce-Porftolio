@@ -1,0 +1,32 @@
+type CartSummaryValuesType = {
+  totalPrice: number;
+  totalBooks: number;
+};
+
+export default function CartItemsSummary({
+  totalBooks,
+  totalPrice,
+}: CartSummaryValuesType) {
+  return (
+    <div className="flex flex-col  py-8 px-4">
+      <div className="flex items-center mb-4">
+        <p className="flex-grow font-semibold text-xl text-gray-800">
+          Total value:
+        </p>
+        <p
+          className="font-bold text-2xl text-orange-500"
+          aria-label="Total value"
+        >
+          {totalPrice ? `${totalPrice}$` : "  ---$"}
+        </p>
+      </div>
+      <div className="flex items-center mb-6">
+        <p className="flex-grow text-lg text-gray-700">Total books:</p>
+        <p className="text-lg text-gray-700">{totalBooks ? totalBooks : "0"}</p>
+      </div>
+      <button className="mt-auto bg-orange-400 py-2 rounded-xl font-semibold uppercase text-xl text-gray-900 transition dration-300 hover:bg-orange-500 hover:shadow-lg active:scale-95">
+        Order & Pay
+      </button>
+    </div>
+  );
+}
