@@ -5,6 +5,6 @@ import { cookies } from "next/headers";
 export default async function userSessionId() {
   const cookieStore = await cookies();
   const session = cookieStore.get("session")?.value!;
-  const userSession = getUserSessionId(session) as UserSession;
+  const userSession = await getUserSessionId(session);
   return userSession.userId;
 }

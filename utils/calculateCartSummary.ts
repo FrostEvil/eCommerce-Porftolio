@@ -1,22 +1,16 @@
-import { CartBook } from "@/types/type";
-import userSessionId from "./userSessionId";
-import { getCartBooks } from "@/actions/cart-actions";
+import { CartSummary, CartSummaryProps } from "@/types/type";
 
-export default async function calculateCartSummary() {
-  const userId = await userSessionId();
-  const allBooks: CartBook[] = await getCartBooks(userId);
-  const totalPrice = parseFloat(
-    allBooks
-      .map((book) => book.endingPrice)
-      .reduce((acc, cur) => acc + cur, 0)
-      .toFixed(2)
+export default function calculateCartSummary({
+  cartItems,
+}: CartSummaryProps): CartSummary {
+  const totalPrice = Number(
+    cartItems.reduce((sum, item) => sum + item.endingPrice, 0)
   );
-  const totalBooks = allBooks
-    .map((book) => book.quantity)
-    .reduce((acc, cur) => acc + cur, 0);
+
+  const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return {
     totalPrice,
-    totalBooks,
+    totalQuantity,
   };
 }

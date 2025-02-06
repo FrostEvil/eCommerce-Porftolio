@@ -1,20 +1,16 @@
 "use client";
 
 import { FaPlus, FaMinus, FaTrashCan } from "react-icons/fa6";
-import { Book, CartBook } from "@/types/type";
+import { UseCartManagementType } from "@/types/type";
 import useCartManagement from "@/hooks/useCartManagement";
-
-type CartItemControlsType = {
-  cartBook: CartBook;
-  book: Book;
-  userId: number;
-};
+import { cn } from "@/lib/utils";
 
 export default function CartItemControls({
-  cartBook,
-  book,
-  userId,
-}: CartItemControlsType) {
+  cartItemProps,
+}: {
+  cartItemProps: UseCartManagementType;
+}) {
+  const { book, cartBook } = cartItemProps;
   if (!cartBook) return;
 
   const {
@@ -23,7 +19,7 @@ export default function CartItemControls({
     handleIncrease,
     handleDecrease,
     handleDelete,
-  } = useCartManagement({ cartBook, book, userId });
+  } = useCartManagement(cartItemProps);
 
   return (
     <div className="flex items-end justify-around flex-col">
@@ -31,9 +27,10 @@ export default function CartItemControls({
         <button
           disabled={currentQuantity === 1 ? true : false}
           onClick={handleDecrease}
-          className={`px-2 py-1 transition-all duration-150 ${
+          className={cn(
+            "px-2 py-1 tranistion-all duration-150",
             currentQuantity === 1 ? "" : "hover:bg-gray-100 active:bg-gray-200"
-          }`}
+          )}
         >
           <FaMinus />
         </button>
@@ -41,11 +38,12 @@ export default function CartItemControls({
         <button
           disabled={currentQuantity === book.stockQuantity ? true : false}
           onClick={handleIncrease}
-          className={`px-2 py-1  transition-all duration-150 ${
+          className={cn(
+            "px-2 py-1 transition-all duration-150",
             currentQuantity === book.stockQuantity
               ? ""
               : "hover:bg-gray-100 active:bg-gray-200"
-          }`}
+          )}
         >
           <FaPlus />
         </button>

@@ -24,7 +24,27 @@ export default async function SingleProduct({ params }: ParamsType) {
     coverImageUrl,
     description,
   } = getSingleBook(slug);
+
   const currentPage = checkCurrentPage(slug);
+  const bookDetails = [author, genre, language, description, yearPublished];
+  const bookLegend = [
+    "Author",
+    "Genre",
+    "Language",
+    "Description",
+    "YearPublished",
+  ];
+
+  const showBookDetails = bookDetails.map((detail, i) => {
+    return (
+      <p className="text-lg" key={detail}>
+        <span className="font-semibold text-gray-800">
+          {bookLegend[i]}:&nbsp;
+        </span>
+        {detail}
+      </p>
+    );
+  });
 
   return (
     <main className="container mx-auto px-6 py-12">
@@ -47,28 +67,7 @@ export default async function SingleProduct({ params }: ParamsType) {
         {/* Book Details */}
         <div className="w-full md:w-2/3 bg-white p-6 rounded-lg shadow-lg">
           <div className="mb-6 gap-y-2 flex flex-col">
-            <p className="text-lg">
-              <span className="font-semibold text-gray-800">Author:</span>
-              {author}
-            </p>
-            <p className="text-lg">
-              <span className="font-semibold text-gray-800">Genre:</span>
-              {genre}
-            </p>
-            <p className="text-lg">
-              <span className="font-semibold text-gray-800">Language:</span>
-              {language}
-            </p>
-            <p className="text-lg">
-              <span className="font-semibold text-gray-800">Description:</span>
-              {description}
-            </p>
-            <p className="text-lg">
-              <span className="font-semibold text-gray-800">
-                Year Published:
-              </span>
-              {yearPublished}
-            </p>
+            {showBookDetails}
             <div className="flex items-center gap-1 text-yellow-500 text-lg">
               {"★".repeat(Math.round(rating))}
               {"☆".repeat(5 - Math.round(rating))}
@@ -83,12 +82,10 @@ export default async function SingleProduct({ params }: ParamsType) {
               <span className="text-sm text-gray-500">
                 Stock: {stockQuantity}
               </span>
-              {verifyUser ? (
+              {verifyUser && (
                 <button className="ml-4 bg-green-500 text-white text-lg font-semibold py-2 px-6 rounded-lg shadow hover:bg-green-600 hover:shadow-md transition duration-300">
                   Add to Cart
                 </button>
-              ) : (
-                ""
               )}
             </div>
           </div>

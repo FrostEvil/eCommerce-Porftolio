@@ -3,13 +3,15 @@ import { Book } from "@/types/type";
 import Image from "next/image";
 import Link from "next/link";
 import AddToCartButton from "./AddToCartButton";
-import userSessionId from "@/utils/userSessionId";
+import userSessionId from "@/lib/userSessionId";
 import { getSelectedCartBook } from "@/actions/cart-actions";
 
 export default async function ProductItem(book: Book) {
   const verifyUser = await verifySession();
   const userId = await userSessionId();
   const cartBook = await getSelectedCartBook(book.id, userId);
+
+  const cartProps = { book, userId, cartBook };
   return (
     <div className=" rounded-lg shadow-md bg-white hover:shadow-lg transition-shadow duration-300 flex flex-col">
       {/* Book Image */}
@@ -55,12 +57,7 @@ export default async function ProductItem(book: Book) {
           >
             See More →
           </Link>
-
-          {verifyUser ? (
-            <AddToCartButton {...{ book, userId, cartBook }} />
-          ) : (
-            ""
-          )}
+          {verifyUser && <AddToCartButton cartProps={cartProps} />}
         </div>
       </div>
     </div>

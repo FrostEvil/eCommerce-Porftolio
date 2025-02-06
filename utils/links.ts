@@ -1,9 +1,6 @@
-import { verifySession } from "@/lib/session";
-import { LinksType } from "@/types/type";
+import { JWTPayload } from "jose";
 
-export default async function NavLinks(): Promise<LinksType[]> {
-  const verifyUser = await verifySession();
-
+export default function NavLink(verifyUser: JWTPayload | undefined) {
   if (verifyUser) {
     return [
       {

@@ -82,3 +82,9 @@ export function getAllCartBooks(userId: UserSession["userId"]) {
 
   return cartBooks as CartBook[];
 }
+
+//delete userId books cart
+export function DeleteUserCartBook(userId: UserSession["userId"]) {
+  const stmt = db.prepare("DELETE FROM cart WHERE userId = ?");
+  stmt.run(userId);
+}

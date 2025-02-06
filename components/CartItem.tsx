@@ -2,11 +2,12 @@ import { getSelectedBook } from "@/actions/book-actions";
 import { CartBook } from "@/types/type";
 import Image from "next/image";
 import CartItemControls from "./CartItemControls";
-import userSessionId from "@/utils/userSessionId";
+import userSessionId from "@/lib/userSessionId";
 
 export default async function CartItem(cartBook: CartBook) {
   const book = await getSelectedBook(cartBook.id);
   const userId = await userSessionId();
+  const cartItemProps = { cartBook, book, userId };
   return (
     <div className="grid grid-cols-5 gap-6 h-max p-8">
       <div className=" relative w-full  overflow-hidden shadow-lg">
@@ -25,7 +26,7 @@ export default async function CartItem(cartBook: CartBook) {
           Estimated shipping in 1 business day.
         </p>
       </div>
-      <CartItemControls {...{ cartBook, book, userId }} />
+      <CartItemControls cartItemProps={cartItemProps} />
     </div>
   );
 }

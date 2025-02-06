@@ -8,8 +8,6 @@ export function hashUserPassword(password: any) {
 }
 
 export function verifyPassword(storedPassword: any, suppliedPassword: any) {
-  console.log("stored:", storedPassword);
-  console.log("supplied:", suppliedPassword);
   const [hashedPassword, salt] = storedPassword.split(":");
   const hashedPasswordBuf = Buffer.from(hashedPassword, "hex");
   const suppliedPasswordBuf = crypto.scryptSync(suppliedPassword, salt, 64);

@@ -1,16 +1,11 @@
 import CartItem from "@/components/CartItem";
 import CartItemsSummary from "@/components/CartItemsSummary";
-import { getAllCartBooks } from "@/lib/cart";
 import { CartBook } from "@/types/type";
-import calculateCartSummary from "@/utils/calculateCartSummary";
-import userSessionId from "@/utils/userSessionId";
+import fetchCartUtils from "@/utils/cartUtils";
 
 export default async function CartPage() {
-  const userId = await userSessionId();
-  console.log("userId", userId);
-  const CartBooks = getAllCartBooks(userId);
+  const { cartItems, cartSummaryValues } = await fetchCartUtils();
 
-  const CartSummaryValues = await calculateCartSummary();
   return (
     <main className="container mx-auto px-6 py-12">
       <div>
@@ -25,14 +20,21 @@ export default async function CartPage() {
       </div>
       <div className=" grid grid-cols-5 gap-x-8">
         <div className="col-span-3 bg-white">
-          {CartBooks
-            ? CartBooks.map((cartBook: CartBook) => {
-                return <CartItem {...cartBook} key={cartBook.id} />;
-              })
-            : ""}
+          {cartItems.length === 0 ? (
+            <p className="px-6 py-4 text-lg text-gray-700">
+              Your cart is empty! 📚 Browse our collection and add your favorite
+              books to start your reading journey. Head back to the product page
+              and find your next great read! 🚀
+            </p>
+          ) : (
+            cartItems.map((cartBook: CartBook) => {
+              return <CartItem {...cartBook} key={cartBook.id} />;
+            })
+          )}
         </div>
+
         <div className="bg-white col-span-2">
-          <CartItemsSummary {...CartSummaryValues} />
+          <CartItemsSummary {...cartSummaryValues} />
         </div>
       </div>
     </main>

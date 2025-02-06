@@ -48,3 +48,12 @@ export type ManageUserCartBook = {
 export type UseCartManagementType = ManageUserCartBook & {
   cartBook: CartBook | undefined;
 };
+
+export type CartSummary = {
+  totalPrice: number;
+  totalQuantity: number;
+};
+
+export type CartSummaryProps = {
+  cartItems: CartBook[];
+};

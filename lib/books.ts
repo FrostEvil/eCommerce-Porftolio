@@ -1,4 +1,4 @@
-import { Book } from "@/types/type";
+import { Book, CartBook } from "@/types/type";
 import db from "./db";
 
 type SelectedBooksType = {
@@ -32,4 +32,20 @@ export function getTotalBooksCount() {
     total: number;
   };
   return total;
+}
+
+export function updateBooks(cartBook: CartBook[]) {
+  if (!cartBook || cartBook.length === 0) return;
+
+  //Update stockQuantity
+  cartBook.forEach((book) => {
+    const stmt = db.prepare(
+      `UPDATE books SET stockQuantity = stockQuantity - ? WHERE id = ?`
+    );
+    stmt.run(book.quantity, book.id);
+
+    //Remove books from books.db where stockQuantity is 0
+    const deleteStmt = db.prepare("DELETE FROM books WHERE stockQuantity=0");
+    deleteStmt.run();
+  });
 }

@@ -1,19 +1,14 @@
 "use server";
 
 import {
+  DeleteUserCartBook,
   decreaseCartBookQuantity,
   deleteFromCartBook,
   getAllCartBooks,
   getSelectedBook,
   increaseCartBookQuantity,
 } from "@/lib/cart";
-import {
-  ManageUserCartBook,
-  Book,
-  CartBook,
-  User,
-  UserSession,
-} from "@/types/type";
+import { ManageUserCartBook, Book, CartBook, UserSession } from "@/types/type";
 import { revalidatePath } from "next/cache";
 
 export async function addBookCart({ book, userId }: ManageUserCartBook) {
@@ -44,4 +39,8 @@ export async function getSelectedCartBook(
   } catch (error) {
     console.error(error);
   }
+}
+
+export async function clearCartBook(userId: UserSession["userId"]) {
+  DeleteUserCartBook(userId);
 }
