@@ -12,12 +12,8 @@ export function getAllBooks() {
 }
 
 export function getSelectedBooks({ take, skip }: SelectedBooksType) {
-  const startingId = skip + 1;
-  const stmt = db.prepare("SELECT * FROM books WHERE id = ?");
-  let selectedBook: Book[] = [];
-  for (let i = startingId; i < take + startingId; i++) {
-    selectedBook.push(stmt.get(i) as Book);
-  }
+  const stmt = db.prepare("SELECT * FROM books ORDER BY id LIMIT ? OFFSET ?");
+  const selectedBook = stmt.all(take, skip) as Book[];
   return selectedBook;
 }
 

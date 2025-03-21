@@ -1,6 +1,6 @@
 "use server";
 
-import { verifyPassword } from "@/lib/hash";
+import { verifyPassword } from "@/lib/passwordHasher";
 import { createSession, deleteSession } from "@/lib/session";
 import { createUser, getUserByEmail } from "@/lib/users";
 import { redirect } from "next/navigation";

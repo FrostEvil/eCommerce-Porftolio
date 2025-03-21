@@ -4,7 +4,7 @@ const db = sql("myDatabase.db");
 
 //Users
 db.prepare(
-  `CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY, email TEXT UNIQUE, password TEXT)`
+  `CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY, email TEXT UNIQUE, password TEXT salt TEXT)`
 ).run();
 
 //Books

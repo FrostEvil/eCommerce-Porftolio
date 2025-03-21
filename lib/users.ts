@@ -1,6 +1,9 @@
-import { User } from "@/types/type";
+import { Book, User } from "@/types/type";
 import db from "./db";
-import { hashUserPassword } from "./hash";
+import { hashUserPassword } from "./passwordHasher";
+import { verifySession } from "./session";
+import userSessionId from "./userSessionId";
+import { getSelectedCartBook } from "@/actions/cart-actions";
 
 export function createUser(email: string, password: string) {
   try {
@@ -20,4 +23,15 @@ export function getUserByEmail(email: string) {
   const result = stmt.get(email) as User | undefined;
 
   return result;
+}
+
+export async function verifyUserData(id: Book["id"]) {
+  const verifyUser = await verifySession();
+  const userId = await userSessionId();
+  const cartBook = await getSelectedCartBook(id, userId);
+  return {
+    verifyUser,
+    userId,
+    cartBook,
+  };
 }

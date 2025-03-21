@@ -1,5 +1,7 @@
+import AddToCartButton from "@/components/AddToCartButton";
 import { getSingleBook } from "@/lib/books";
 import { verifySession } from "@/lib/session";
+import { verifyUserData } from "@/lib/users";
 import { Book } from "@/types/type";
 import { checkCurrentPage } from "@/utils/checkCurrentPage";
 import Image from "next/image";
@@ -11,7 +13,7 @@ type ParamsType = {
 
 export default async function SingleProduct({ params }: ParamsType) {
   const slug = (await params).slug;
-  const verifyUser = await verifySession();
+  const book = getSingleBook(slug);
   const {
     title,
     author,
@@ -23,8 +25,11 @@ export default async function SingleProduct({ params }: ParamsType) {
     stockQuantity,
     coverImageUrl,
     description,
-  } = getSingleBook(slug);
+    id,
+  } = book;
 
+  const { verifyUser, userId, cartBook } = await verifyUserData(id);
+  const cartProps = { book, userId, cartBook };
   const currentPage = checkCurrentPage(slug);
   const bookDetails = [author, genre, language, description, yearPublished];
   const bookLegend = [
@@ -78,15 +83,11 @@ export default async function SingleProduct({ params }: ParamsType) {
           {/* Price and Add to Cart */}
           <div className="flex items-center justify-between border-t pt-6">
             <p className="text-3xl font-bold text-green-600">${price}</p>
-            <div>
+            <div className="flex items-center gap-x-3">
               <span className="text-sm text-gray-500">
                 Stock: {stockQuantity}
               </span>
-              {verifyUser && (
-                <button className="ml-4 bg-green-500 text-white text-lg font-semibold py-2 px-6 rounded-lg shadow hover:bg-green-600 hover:shadow-md transition duration-300">
-                  Add to Cart
-                </button>
-              )}
+              {verifyUser && <AddToCartButton cartProps={cartProps} />}
             </div>
           </div>
         </div>

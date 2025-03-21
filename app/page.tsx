@@ -1,7 +1,7 @@
 import Link from "next/link";
 import "../style/globals.css";
 
-export default function Page() {
+export default function HomePage() {
   return (
     <>
       <main className="flex relative bg-hero-pattern bg-center bg-cover h-[calc(100vh-3rem)] w-full">
