@@ -4,7 +4,7 @@ const db = sql("myDatabase.db");
 
 //Users
 db.prepare(
-  `CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY, email TEXT UNIQUE, password TEXT)`
+  `CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY, email TEXT UNIQUE, password TEXT salt TEXT)`
 ).run();
 
 //Books
@@ -42,5 +42,16 @@ function initDb() {
 }
 
 initDb();
+
+//Cart
+
+db.prepare(
+  `CREATE TABLE IF NOT EXISTS cart(userId NUMBER, id INTEGER, quantity NUMBER, endingPrice NUMBER, FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE)`
+).run();
+
+//Session
+db.prepare(
+  "CREATE TABLE IF NOT EXISTS sessions(userId NUMBER, session STRING)"
+).run();
 
 export default db;

@@ -4,13 +4,13 @@ export type LinksType = {
 };
 
 export type User = {
-  id?: string;
+  id: number;
   email: string;
   password: string;
 };
 
 export type SessionPayload = {
-  userId: string;
+  userId: number;
   expiresAt: Date;
 };
 
@@ -26,4 +26,34 @@ export type Book = {
   stockQuantity: number;
   coverImageUrl: string;
   description: string;
+};
+
+export type CartBook = {
+  userId: number;
+  id: number;
+  quantity: number;
+  endingPrice: number;
+};
+
+export type UserSession = {
+  userId: number;
+  session: string;
+};
+
+export type ManageUserCartBook = {
+  userId: number;
+  book: Book;
+};
+
+export type UseCartManagementType = ManageUserCartBook & {
+  cartBook: CartBook | undefined;
+};
+
+export type CartSummary = {
+  totalPrice: number;
+  totalQuantity: number;
+};
+
+export type CartSummaryProps = {
+  cartItems: CartBook[];
 };

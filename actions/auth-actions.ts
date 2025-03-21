@@ -1,18 +1,36 @@
 "use server";
 
-import { verifyPassword } from "@/lib/hash";
+import { verifyPassword } from "@/lib/passwordHasher";
 import { createSession, deleteSession } from "@/lib/session";
 import { createUser, getUserByEmail } from "@/lib/users";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { createUserSession } from "./session-actions";
 
 interface SqliteError extends Error {
   code: string;
 }
 
+// Check mode to login or signup
+export async function auth(mode: string, prevState: any, formData: FormData) {
+  if (mode === "login") {
+    return login(prevState, formData);
+  }
+  return signup(prevState, formData);
+}
+
 export async function signup(prevState: any, formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
+
+  if (!email || !password) {
+    return {
+      emailError: ["Email and password are required!"],
+      passwordError: [],
+      successMessage: "",
+      success: false,
+    };
+  }
 
   // Create a Zod schema to validate email and password
   const formSchema = z.object({
@@ -34,15 +52,19 @@ export async function signup(prevState: any, formData: FormData) {
     return {
       emailError: errorMessages.email,
       passwordError: errorMessages.password,
+      successMessage: "",
+      success: false,
     };
   }
 
   try {
-    const id = createUser(email!, password!);
+    createUser(email!, password!);
 
     return {
-      emailError: [""],
-      passwordError: ["User created! Now u can login"],
+      emailError: [],
+      passwordError: [],
+      successMessage: ["User created successfully! Now you can log in."],
+      success: true,
     };
   } catch (error) {
     if ((error as SqliteError).code === "SQLITE_CONSTRAINT_UNIQUE") {
@@ -51,11 +73,18 @@ export async function signup(prevState: any, formData: FormData) {
           "Account with this email already exists. Please try to login",
         ],
         passwordError: [],
+        successMessage: "",
+        success: false,
       };
     }
+
+    console.error("Error creating user:", error);
+
     return {
-      emailError: ["Something went wrong... "],
-      passwordError: ["Something went wrong... "],
+      emailError: ["Something went wrong. Please try again."],
+      passwordError: [],
+      successMessage: "",
+      success: false,
     };
   }
 }
@@ -63,18 +92,24 @@ export async function signup(prevState: any, formData: FormData) {
 export async function login(prevState: any, formData: FormData) {
   const email = formData.get("email");
   const password = formData.get("password");
+
   if (!email || !password) {
     return {
-      emailError: ["Something went wrong... Try again."],
-      passwordError: ["Something went wrong... Try again."],
+      emailError: ["Email and password are required!"],
+      passwordError: [],
+      successMessage: "",
+      success: false,
     };
   }
 
   const existingUser = getUserByEmail(email as string);
+
   if (!existingUser) {
     return {
       emailError: ["User does not exist."],
       passwordError: [],
+      successMessage: "",
+      success: false,
     };
   }
   const isValidPassword = verifyPassword(existingUser.password, password);
@@ -83,10 +118,15 @@ export async function login(prevState: any, formData: FormData) {
     return {
       emailError: [],
       passwordError: ["Password is incorrect, try again."],
+      successMessage: "",
+      success: false,
     };
   }
 
-  await createSession(existingUser.id!);
+  const session = await createSession(existingUser.id);
+
+  //is necessary use 'server action'? or better create session here?
+  await createUserSession(existingUser.id, session);
 
   redirect("/products");
 }
@@ -94,11 +134,4 @@ export async function login(prevState: any, formData: FormData) {
 export async function logout() {
   await deleteSession();
   redirect("/");
-}
-
-export async function auth(mode: string, prevState: any, formData: FormData) {
-  if (mode === "login") {
-    return login(prevState, formData);
-  }
-  return signup(prevState, formData);
 }

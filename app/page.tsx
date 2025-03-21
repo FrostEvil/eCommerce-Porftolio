@@ -1,7 +1,7 @@
 import Link from "next/link";
 import "../style/globals.css";
 
-export default function Page() {
+export default function HomePage() {
   return (
     <>
       <main className="flex relative bg-hero-pattern bg-center bg-cover h-[calc(100vh-3rem)] w-full">
@@ -13,7 +13,7 @@ export default function Page() {
           <div>
             <p className="text-white text-4xl">
               <Link
-                href="/products"
+                href="/products?page=1"
                 className="underline underline-offset-8 decoration-blue-700 hover:text-blue-700 duration-200 "
               >
                 Shop Now

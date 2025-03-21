@@ -6,7 +6,7 @@ import NavLinks from "@/utils/links";
 
 export default async function Navigation() {
   const verifyUser = await verifySession();
-  const navLinks = await NavLinks();
+  const navLinks = NavLinks(verifyUser);
 
   return (
     <header
@@ -27,12 +27,12 @@ export default async function Navigation() {
               <>
                 <form action={logout}>
                   <button className="hover:text-blue-700 uppercase text-lg font-medium">
-                    Logout
+                    Log out
                   </button>
                 </form>
               </>
             ) : (
-              <NavLink href="/account?mode=login" text="Login" />
+              <NavLink href="/account?mode=login" text="Log in" />
             )}
           </ul>
         </div>
