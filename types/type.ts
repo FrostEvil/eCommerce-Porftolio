@@ -1,15 +1,20 @@
+import { oAuthProviderEnum, userRoleEnum } from "@/drizzle/schema";
+
 export type LinksType = {
   href: string;
   text: string;
+  publicPage: boolean;
 };
 
 export type User = {
+  id: number;
   id: number;
   email: string;
   password: string;
 };
 
 export type SessionPayload = {
+  userId: number;
   userId: number;
   expiresAt: Date;
 };
@@ -28,32 +33,13 @@ export type Book = {
   description: string;
 };
 
-export type CartBook = {
-  userId: number;
-  id: number;
-  quantity: number;
-  endingPrice: number;
+export type FormErrors = {
+  nameError?: string[];
+  emailError?: string[];
+  passwordError?: string[];
+  globalError?: string[];
 };
 
-export type UserSession = {
-  userId: number;
-  session: string;
-};
+export type UserRole = (typeof userRoleEnum.enumValues)[number];
 
-export type ManageUserCartBook = {
-  userId: number;
-  book: Book;
-};
-
-export type UseCartManagementType = ManageUserCartBook & {
-  cartBook: CartBook | undefined;
-};
-
-export type CartSummary = {
-  totalPrice: number;
-  totalQuantity: number;
-};
-
-export type CartSummaryProps = {
-  cartItems: CartBook[];
-};
+export type ProviderType = (typeof oAuthProviderEnum.enumValues)[number];

@@ -1,25 +1,37 @@
-import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { decrypt } from "./lib/session";
+import { authConfig } from "./auth.config";
+import NextAuth from "next-auth";
+import { AUTH_ROUTES, LOGIN, PROTECTED_ROUTES, ROOT } from "./lib/routes";
 
-const protectedRoutes = ["/cart", "/cart/payment"];
-const publicRoutes = ["/account"];
+const { auth } = NextAuth(authConfig);
 
-export default async function middleware(req: NextRequest) {
-  const path = req.nextUrl.pathname;
-  const isProtectedRoute = protectedRoutes.includes(path);
-  const isPublicRoute = publicRoutes.includes(path);
+export async function middleware(request: NextRequest) {
+  const { nextUrl } = request;
 
-  const cookie = (await cookies()).get("session")?.value;
-  const session = await decrypt(cookie);
-
-  if (isProtectedRoute && !session?.userId) {
-    return NextResponse.redirect(new URL("/account/?mode=login", req.nextUrl));
+  // Exclude NextAuth API routes to prevent auth errors
+  if (nextUrl.pathname.startsWith("/api/auth")) {
+    return NextResponse.next();
   }
 
-  if (isPublicRoute && session?.userId) {
-    return NextResponse.redirect(new URL("/", req.nextUrl));
-  }
+  const session = await auth();
+  const isAuthenticated = !!session?.user;
+
+  const isProtectedRoute = PROTECTED_ROUTES.some((route) =>
+    nextUrl.pathname.startsWith(route)
+  );
+  const isAuthRoute = AUTH_ROUTES.some((route) =>
+    nextUrl.pathname.startsWith(route)
+  );
+
+  if (!isAuthenticated && isProtectedRoute)
+    return NextResponse.redirect(new URL(LOGIN, nextUrl));
+
+  if (isAuthenticated && isAuthRoute)
+    return NextResponse.redirect(new URL(ROOT, nextUrl));
 
   return NextResponse.next();
 }
+
+export const config = {
+  matcher: ["/((?!_next|.*\\..*|api/auth).*)", "/", "/(api|trpc)(.*)"],
+};

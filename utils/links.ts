@@ -1,31 +1,16 @@
-import { JWTPayload } from "jose";
+import { LinksType } from "@/types/type";
 
-export default function NavLink(verifyUser: JWTPayload | undefined) {
-  if (verifyUser) {
-    return [
-      {
-        href: "/",
-        text: "Home",
-      },
-      {
-        href: "/products?page=1",
-        text: "Products",
-      },
-      {
-        href: "/cart",
-        text: "Cart",
-      },
-    ];
-  }
-
+export default function NavLinks(): LinksType[] {
   return [
     {
       href: "/",
       text: "Home",
+      publicPage: true,
     },
     {
       href: "/products?page=1",
       text: "Products",
+      publicPage: false,
     },
   ];
 }
