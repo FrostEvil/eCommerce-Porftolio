@@ -1,12 +1,13 @@
 import Link from "next/link";
 import NavLink from "./Nav-Link";
-import { verifySession } from "@/lib/session";
-import { logout } from "@/actions/auth-actions";
+
 import NavLinks from "@/utils/links";
+import { auth } from "@/lib/auth";
+import AccountNavgation from "./AccountNavigation";
 
 export default async function Navigation() {
-  const verifyUser = await verifySession();
-  const navLinks = await NavLinks();
+  const navLinks = NavLinks();
+  const session = await auth();
 
   return (
     <header
@@ -18,12 +19,15 @@ export default async function Navigation() {
           <div className="text-xl font-bold">
             <Link href="/">LitStore</Link>
           </div>
-          <ul className="flex gap-x-10 uppercase text-lg font-medium">
+          <ul className=" flex gap-x-10 uppercase items-center text-lg font-medium ">
             {navLinks &&
               navLinks.map((link) => {
-                return <NavLink key={link.href} {...link} />;
+                return <NavLink key={link.href} {...link} session={session} />;
               })}
-            {verifyUser ? (
+            <li>
+              <AccountNavgation session={session} />
+            </li>
+            {/* {verifyUser ? (
               <>
                 <form action={logout}>
                   <button className="hover:text-blue-700 uppercase text-lg font-medium">
@@ -33,7 +37,7 @@ export default async function Navigation() {
               </>
             ) : (
               <NavLink href="/account?mode=login" text="Login" />
-            )}
+            )} */}
           </ul>
         </div>
       </nav>

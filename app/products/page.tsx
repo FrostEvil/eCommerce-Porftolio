@@ -25,11 +25,12 @@ export default async function ProductsPage({
           styles.
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+      //TODO:Add books database!
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
         {books.map((book) => {
           return book ? <ProductItem {...book} key={book.id} /> : "";
         })}
-      </div>
+      </div> */}
       <Pagination
         {...{
           page: pageNumber,

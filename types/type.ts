@@ -1,6 +1,9 @@
+import { oAuthProviderEnum, userRoleEnum } from "@/drizzle/schema";
+
 export type LinksType = {
   href: string;
   text: string;
+  publicPage: boolean;
 };
 
 export type User = {
@@ -27,3 +30,14 @@ export type Book = {
   coverImageUrl: string;
   description: string;
 };
+
+export type FormErrors = {
+  nameError?: string[];
+  emailError?: string[];
+  passwordError?: string[];
+  globalError?: string[];
+};
+
+export type UserRole = (typeof userRoleEnum.enumValues)[number];
+
+export type ProviderType = (typeof oAuthProviderEnum.enumValues)[number];
