@@ -1,19 +1,17 @@
-import { fetchSelectedBooks } from "@/actions/selected-books-actions";
 import Pagination from "@/components/Pagination";
 import ProductItem from "@/components/ProductItem";
-
-// const PAGE_SIZE = 6;
+import selectedBooks from "@/lib/selectedBooks";
 
 export default async function ProductsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ [key: string]: string | undefined }>;
+  searchParams: { [key: string]: string | undefined };
 }) {
-  const pageNumber = Number((await searchParams).page) || 1;
-  const take: number = Number(process.env.PAGE_SIZE);
-  const skip: number = (pageNumber - 1) * take;
+  const params = await searchParams; // Await searchParams before accessing it
+  const pageNumber = Number(params.page) || 1;
 
-  const { books, metadata } = await fetchSelectedBooks({ take, skip });
+  const { books, metadata } = selectedBooks(pageNumber);
+
   return (
     <main className="container">
       <div className="text-center my-12">

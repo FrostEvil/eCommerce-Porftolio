@@ -1,24 +1,26 @@
-"use server";
+//Do I actually needed??
 
-import { getSelectedBooks, getTotalBooksCount } from "@/lib/books";
+// "use server";
 
-type FetchSelectedBooksProps = {
-  take: number;
-  skip: number;
-};
+// import { getSelectedBooks, getTotalBooksCount } from "@/lib/books";
 
-export async function fetchSelectedBooks({
-  take,
-  skip,
-}: FetchSelectedBooksProps) {
-  const selectedBooks = getSelectedBooks({ take, skip });
-  const totalBooks = getTotalBooksCount();
+// type FetchSelectedBooksProps = {
+//   take: number;
+//   skip: number;
+// };
 
-  return {
-    books: selectedBooks,
-    metadata: {
-      hasNextPage: skip + take < totalBooks,
-      totalPage: Math.ceil(totalBooks / take),
-    },
-  };
-}
+// export async function fetchSelectedBooks({
+//   take,
+//   skip,
+// }: FetchSelectedBooksProps) {
+//   const selectedBooks = getSelectedBooks({ take, skip });
+//   const totalBooks = getTotalBooksCount();
+
+//   return {
+//     books: selectedBooks,
+//     metadata: {
+//       hasNextPage: skip + take < totalBooks,
+//       totalPage: Math.ceil(totalBooks / take),
+//     },
+//   };
+// }
