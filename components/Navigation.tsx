@@ -32,6 +32,7 @@ export default async function Navigation() {
                 <form action={logout}>
                   <button className="hover:text-blue-700 uppercase text-lg font-medium">
                     Log out
+                    Log out
                   </button>
                 </form>
               </>

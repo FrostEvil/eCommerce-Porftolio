@@ -8,11 +8,13 @@ export type LinksType = {
 
 export type User = {
   id: number;
+  id: number;
   email: string;
   password: string;
 };
 
 export type SessionPayload = {
+  userId: number;
   userId: number;
   expiresAt: Date;
 };
