@@ -2,12 +2,12 @@ import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
 
 export default function AccountLinks({
-  setShowLinks,
+  setShowAccountNav,
 }: {
-  setShowLinks: Dispatch<SetStateAction<boolean>>;
+  setShowAccountNav: Dispatch<SetStateAction<boolean>>;
 }) {
   const handleShowLinks = () => {
-    setShowLinks(false);
+    setShowAccountNav(false);
   };
   return (
     <div className="absolute z-30 bg-gradient-to-r from-blue-200 via-blue-50 to-blue-300 shadow-lg top-0 right-0 w-56 border border-blue-300 animate-fadeIn">

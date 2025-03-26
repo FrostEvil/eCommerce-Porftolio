@@ -1,12 +1,22 @@
 import Link from "next/link";
 import NavLink from "./Nav-Link";
-
-import NavLinks from "@/utils/links";
 import { auth } from "@/lib/auth";
 import AccountNavgation from "./AccountNavigation";
 
+const navigationLinks = [
+  {
+    href: "/",
+    text: "Home",
+    publicPage: true,
+  },
+  {
+    href: "/books?page=1",
+    text: "Books",
+    publicPage: true,
+  },
+];
+
 export default async function Navigation() {
-  const navLinks = NavLinks();
   const session = await auth();
 
   return (
@@ -20,25 +30,12 @@ export default async function Navigation() {
             <Link href="/">LitStore</Link>
           </div>
           <ul className=" flex gap-x-10 uppercase items-center text-lg font-medium ">
-            {navLinks &&
-              navLinks.map((link) => {
-                return <NavLink key={link.href} {...link} session={session} />;
-              })}
+            {navigationLinks.map((link) => {
+              return <NavLink key={link.href} {...link} session={session} />;
+            })}
             <li>
               <AccountNavgation session={session} />
             </li>
-            {/* {verifyUser ? (
-              <>
-                <form action={logout}>
-                  <button className="hover:text-blue-700 uppercase text-lg font-medium">
-                    Log out
-                    Log out
-                  </button>
-                </form>
-              </>
-            ) : (
-              <NavLink href="/account?mode=login" text="Login" />
-            )} */}
           </ul>
         </div>
       </nav>

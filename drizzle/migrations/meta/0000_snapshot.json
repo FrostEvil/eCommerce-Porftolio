@@ -1,9 +1,116 @@
 {
-  "id": "9c5c2e76-34ee-4800-ba67-0d48f24fcc19",
+  "id": "40f5f282-0964-47e0-bc2e-d3eca6d432bd",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.books": {
+      "name": "books",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "author": {
+          "name": "author",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "genre": {
+          "name": "genre",
+          "type": "book_genre",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "price": {
+          "name": "price",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "language": {
+          "name": "language",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "yearPublished": {
+          "name": "yearPublished",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "rating": {
+          "name": "rating",
+          "type": "numeric(3, 1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bookQuantity": {
+          "name": "bookQuantity",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "coverImageUrl": {
+          "name": "coverImageUrl",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "yearPublished_check": {
+          "name": "yearPublished_check",
+          "value": "\"books\".\"yearPublished\" > 0 AND \"books\".\"yearPublished\" <= EXTRACT(YEAR FROM CURRENT_DATE)"
+        },
+        "rating_check": {
+          "name": "rating_check",
+          "value": "\"books\".\"rating\" >= 0 AND \"books\".\"rating\" <= 5"
+        },
+        "bookQuantity_check": {
+          "name": "bookQuantity_check",
+          "value": "\"books\".\"bookQuantity\" >= 0"
+        }
+      },
+      "isRLSEnabled": false
+    },
     "public.user_oauth_accounts": {
       "name": "user_oauth_accounts",
       "schema": "",
@@ -156,6 +263,27 @@
     }
   },
   "enums": {
+    "public.book_genre": {
+      "name": "book_genre",
+      "schema": "public",
+      "values": [
+        "Fiction",
+        "Sci-Fi",
+        "Mystery",
+        "Non-Fiction",
+        "Biography",
+        "Self-Help",
+        "Memoir",
+        "Post-Apocalyptic",
+        "Dystopian",
+        "Fantasy",
+        "Science",
+        "Historical Fiction",
+        "Thriller",
+        "Horror",
+        "Romance"
+      ]
+    },
     "public.oauth_provides": {
       "name": "oauth_provides",
       "schema": "public",

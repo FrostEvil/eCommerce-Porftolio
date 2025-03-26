@@ -1,16 +1,10 @@
 import { cn } from "@/lib/utils";
-import getPagesToShow from "@/utils/getPageToShow";
+import { PaginationProps } from "@/types/type";
+import getPagesToShow from "@/utils/paginationPagesToShow";
 import Link from "next/link";
 
-type PaginationProps = {
-  page?: number;
-  totalPages: number;
-  hasNextPage: boolean;
-};
-
-export default function Pagination(props: PaginationProps) {
-  const { page = 1, totalPages, hasNextPage } = props;
-
+export default function Pagination({ ...paginationProps }: PaginationProps) {
+  const { page, totalPages, hasNextPage } = paginationProps;
   const currentPage = Math.min(Math.max(Number(page), 1), totalPages);
 
   const pages = getPagesToShow({ currentPage, totalPages });

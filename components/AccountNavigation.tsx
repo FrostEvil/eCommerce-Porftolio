@@ -11,14 +11,14 @@ export default function AccountNavgation({
 }: {
   session: Session | null;
 }) {
-  const [showLinks, setShowLinks] = useState(false);
+  const [showAccountNav, setShowAccountNav] = useState(false);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const pathname = usePathname();
-  const activeLinks = ["/sign-in", "/sign-up"];
-  const isActive = activeLinks.includes(pathname);
+  const accountNavigationLinks = ["/sign-in", "/sign-up"];
+  const isActive = accountNavigationLinks.includes(pathname);
 
   const handleShowLinks = () => {
-    setShowLinks(!showLinks);
+    setShowAccountNav(!showAccountNav);
   };
 
   useEffect(() => {
@@ -27,16 +27,17 @@ export default function AccountNavgation({
         wrapperRef.current &&
         !wrapperRef.current.contains(e.target as Node)
       ) {
-        setShowLinks(false);
+        setShowAccountNav(false);
       }
     };
-    if (showLinks) {
+    if (showAccountNav) {
       document.addEventListener("mousedown", handleClickOutside);
     }
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [showLinks]);
+  }, [showAccountNav]);
+
   return (
     <div ref={wrapperRef}>
       <button
@@ -48,12 +49,12 @@ export default function AccountNavgation({
         My account
       </button>
 
-      {showLinks && (
+      {showAccountNav && (
         <div className="relative">
           {session?.user ? (
-            <AccountManagement setShowLinks={setShowLinks} />
+            <AccountManagement setShowAccountNav={setShowAccountNav} />
           ) : (
-            <AccountLinks setShowLinks={setShowLinks} />
+            <AccountLinks setShowAccountNav={setShowAccountNav} />
           )}
         </div>
       )}

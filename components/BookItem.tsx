@@ -1,16 +1,11 @@
-import { verifySession } from "@/lib/session";
+import { auth } from "@/lib/auth";
 import { Book } from "@/types/type";
 import Image from "next/image";
 import Link from "next/link";
-import AddToCartButton from "./AddToCartButton";
-import { verifyUserData } from "@/lib/users";
+import AddBookToCart from "./AddBookToCart";
 
-export default async function ProductItem(book: Book) {
-  // const verifyUser = await verifySession();
-  // const userId = await userSessionId();
-  // const cartBook = await getSelectedCartBook(book.id, userId);
-  const { verifyUser, userId, cartBook } = await verifyUserData(book.id);
-  const cartProps = { book, userId, cartBook };
+export default async function BookItem(book: Book) {
+  const session = await auth();
   return (
     <div className=" rounded-lg shadow-md bg-white hover:shadow-lg transition-shadow duration-300 flex flex-col">
       {/* Book Image */}
@@ -51,12 +46,12 @@ export default async function ProductItem(book: Book) {
         </div>
         <div className="flex justify-between items-center mt-2">
           <Link
-            href={`/products/${book.id}`}
+            href={`/books/${book.id}`}
             className="bg-blue-500 text-white text-sm font-semibold py-1.5 px-4 rounded hover:bg-blue-600 transition-all duration-300"
           >
             See More →
           </Link>
-          {verifyUser && <AddToCartButton cartProps={cartProps} />}
+          {session && <AddBookToCart />}
         </div>
       </div>
     </div>

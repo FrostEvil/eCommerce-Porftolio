@@ -12,13 +12,15 @@ type NavLink = LinksType & {
 
 export default function NavLink({ href, text, publicPage, session }: NavLink) {
   const pathname = usePathname();
-
   if (publicPage) {
     return (
       <li>
         <Link
           className={` hover:text-blue-700 duration-200 ${
-            pathname === href.split("?")[0] ? "text-blue-700" : "text-gray-800"
+            pathname === href.split("?")[0] ||
+            pathname.includes(text.toLowerCase())
+              ? "text-blue-700"
+              : "text-gray-800"
           }`}
           href={href}
         >

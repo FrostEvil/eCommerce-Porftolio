@@ -1,7 +1,6 @@
-import AddToCartButton from "@/components/AddToCartButton";
-import { getSingleBook } from "@/lib/books";
-import { verifySession } from "@/lib/session";
-import { verifyUserData } from "@/lib/users";
+import AddBookToCart from "@/components/AddBookToCart";
+import { getBookById } from "@/drizzle/bookQueries";
+import { auth } from "@/lib/auth";
 import { Book } from "@/types/type";
 import { checkCurrentPage } from "@/utils/checkCurrentPage";
 import Image from "next/image";
@@ -11,25 +10,25 @@ type ParamsType = {
   params: Promise<{ slug: Book["id"] }>;
 };
 
-export default async function SingleProduct({ params }: ParamsType) {
+export default async function BookPage({ params }: ParamsType) {
+  const session = await auth();
   const slug = (await params).slug;
-  const book = getSingleBook(slug);
+  const slugBook = await getBookById(slug);
+  if (!slugBook) return;
   const {
     title,
     author,
     genre,
-    price,
     language,
-    yearPublished,
-    rating,
-    stockQuantity,
-    coverImageUrl,
     description,
-    id,
-  } = book;
-
-  const { verifyUser, userId, cartBook } = await verifyUserData(id);
-  const cartProps = { book, userId, cartBook };
+    yearPublished,
+    coverImageUrl,
+    rating,
+    price,
+    stockQuantity,
+  } = {
+    ...slugBook,
+  };
   const currentPage = checkCurrentPage(slug);
   const bookDetails = [author, genre, language, description, yearPublished];
   const bookLegend = [
@@ -87,7 +86,7 @@ export default async function SingleProduct({ params }: ParamsType) {
               <span className="text-sm text-gray-500">
                 Stock: {stockQuantity}
               </span>
-              {verifyUser && <AddToCartButton cartProps={cartProps} />}
+              {session && <AddBookToCart />}
             </div>
           </div>
         </div>
@@ -95,7 +94,7 @@ export default async function SingleProduct({ params }: ParamsType) {
       {/* Go Back Button */}
       <div className="mt-8 flex justify-end">
         <Link
-          href={`/products?page=${currentPage}`}
+          href={`/books?page=${currentPage}`}
           className="text-blue-500 hover:text-blue-700 underline text-sm"
         >
           &larr; Go Back to Products
