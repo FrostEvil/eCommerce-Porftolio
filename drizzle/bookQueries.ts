@@ -15,7 +15,7 @@ async function insertBooks() {
   }
 }
 
-insertBooks();
+// insertBooks();
 
 export async function getAllBooks(): Promise<Book[]> {
   const books = await db.select().from(BookTable);

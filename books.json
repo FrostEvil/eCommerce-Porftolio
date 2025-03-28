@@ -8,7 +8,6 @@
     "language": "English",
     "yearPublished": 1925,
     "rating": 4.5,
-    "stockQuantity": 8,
     "coverImageUrl": "/example.webp",
     "description": "A classic novel that explores themes of wealth, love, and the American Dream in the Jazz Age."
   },
@@ -21,7 +20,6 @@
     "language": "English",
     "yearPublished": 1949,
     "rating": 4.7,
-    "stockQuantity": 15,
     "coverImageUrl": "/example.webp",
     "description": "A dystopian novel about a totalitarian regime that uses surveillance and propaganda to control society."
   },
@@ -34,7 +32,6 @@
     "language": "Spanish",
     "yearPublished": 1967,
     "rating": 4.6,
-    "stockQuantity": 10,
     "coverImageUrl": "/example.webp",
     "description": "A multigenerational story of the Buendía family, blending magical realism with the history of Colombia."
   },
@@ -47,7 +44,6 @@
     "language": "English",
     "yearPublished": 1988,
     "rating": 4.2,
-    "stockQuantity": 20,
     "coverImageUrl": "/example.webp",
     "description": "A philosophical tale about a shepherd named Santiago and his quest to find a hidden treasure."
   },
@@ -60,7 +56,6 @@
     "language": "English",
     "yearPublished": 2019,
     "rating": 4.3,
-    "stockQuantity": 12,
     "coverImageUrl": "/example.webp",
     "description": "A psychological thriller about a woman who stops speaking after a shocking act of violence."
   },
@@ -73,7 +68,6 @@
     "language": "English",
     "yearPublished": 2011,
     "rating": 4.8,
-    "stockQuantity": 5,
     "coverImageUrl": "/example.webp",
     "description": "An exploration of the history of humankind, from the Stone Age to the present, and how we came to dominate the planet."
   },
@@ -86,7 +80,6 @@
     "language": "English",
     "yearPublished": 1960,
     "rating": 4.9,
-    "stockQuantity": 6,
     "coverImageUrl": "/example.webp",
     "description": "A powerful novel about racial injustice in the Deep South, seen through the eyes of a young girl."
   },
@@ -99,7 +92,6 @@
     "language": "English",
     "yearPublished": 1965,
     "rating": 4.6,
-    "stockQuantity": 9,
     "coverImageUrl": "/example.webp",
     "description": "An epic science fiction novel about the struggle for control of the desert planet Arrakis."
   },
@@ -112,7 +104,6 @@
     "language": "English",
     "yearPublished": 1997,
     "rating": 4.8,
-    "stockQuantity": 18,
     "coverImageUrl": "/example.webp",
     "description": "The first book in the Harry Potter series, introducing the young wizard and his magical world."
   },
@@ -125,7 +116,6 @@
     "language": "English",
     "yearPublished": 1951,
     "rating": 4.0,
-    "stockQuantity": 11,
     "coverImageUrl": "/example.webp",
     "description": "A coming-of-age novel following the experiences of the disillusioned teenager Holden Caulfield."
   },
@@ -138,7 +128,6 @@
     "language": "English",
     "yearPublished": 1813,
     "rating": 4.5,
-    "stockQuantity": 14,
     "coverImageUrl": "/example.webp",
     "description": "A timeless love story between Elizabeth Bennet and Mr. Darcy, filled with wit and social commentary."
   },
@@ -151,7 +140,6 @@
     "language": "English",
     "yearPublished": 1932,
     "rating": 4.4,
-    "stockQuantity": 7,
     "coverImageUrl": "/example.webp",
     "description": "A dystopian novel exploring a future society controlled by technology and consumerism."
   },
@@ -164,7 +152,6 @@
     "language": "English",
     "yearPublished": 1937,
     "rating": 4.8,
-    "stockQuantity": 20,
     "coverImageUrl": "/example.webp",
     "description": "An adventurous tale of Bilbo Baggins as he journeys to reclaim a lost treasure guarded by a dragon."
   },
@@ -177,7 +164,6 @@
     "language": "English",
     "yearPublished": 2006,
     "rating": 4.3,
-    "stockQuantity": 10,
     "coverImageUrl": "/example.webp",
     "description": "A harrowing post-apocalyptic story about a father and son's journey through a devastated landscape."
   },
@@ -190,7 +176,6 @@
     "language": "Russian",
     "yearPublished": 1866,
     "rating": 4.6,
-    "stockQuantity": 8,
     "coverImageUrl": "/example.webp",
     "description": "A psychological novel exploring guilt and redemption through the mind of a young murderer."
   },
@@ -203,7 +188,6 @@
     "language": "English",
     "yearPublished": 2005,
     "rating": 4.7,
-    "stockQuantity": 12,
     "coverImageUrl": "/example.webp",
     "description": "A story set in Nazi Germany, narrated by Death, about a girl who finds solace in stealing books."
   },
@@ -216,7 +200,6 @@
     "language": "English",
     "yearPublished": 1818,
     "rating": 4.3,
-    "stockQuantity": 10,
     "coverImageUrl": "/example.webp",
     "description": "A Gothic novel exploring the consequences of scientific ambition and the nature of humanity."
   },
@@ -229,7 +212,6 @@
     "language": "English",
     "yearPublished": 1851,
     "rating": 4.0,
-    "stockQuantity": 6,
     "coverImageUrl": "/example.webp",
     "description": "A grand tale of obsession and revenge as Captain Ahab hunts the elusive white whale."
   },
@@ -242,7 +224,6 @@
     "language": "English",
     "yearPublished": 2003,
     "rating": 4.7,
-    "stockQuantity": 15,
     "coverImageUrl": "/example.webp",
     "description": "A moving story of friendship, betrayal, and redemption set in Afghanistan."
   },
@@ -255,7 +236,6 @@
     "language": "English",
     "yearPublished": 1897,
     "rating": 4.5,
-    "stockQuantity": 9,
     "coverImageUrl": "/example.webp",
     "description": "A chilling Gothic novel introducing Count Dracula and his thirst for blood."
   },
@@ -268,7 +248,6 @@
     "language": "French",
     "yearPublished": 1862,
     "rating": 4.7,
-    "stockQuantity": 11,
     "coverImageUrl": "/example.webp",
     "description": "An epic tale of redemption, love, and revolution set in 19th-century France."
   },
@@ -281,7 +260,6 @@
     "language": "Spanish",
     "yearPublished": 1605,
     "rating": 4.6,
-    "stockQuantity": 8,
     "coverImageUrl": "/example.webp",
     "description": "A humorous and tragic tale of a man who imagines himself a knight-errant."
   },
@@ -294,7 +272,6 @@
     "language": "English",
     "yearPublished": 1977,
     "rating": 4.8,
-    "stockQuantity": 12,
     "coverImageUrl": "/example.webp",
     "description": "A chilling psychological horror about a haunted hotel and a writer losing his sanity."
   },
@@ -307,7 +284,6 @@
     "language": "English",
     "yearPublished": 1951,
     "rating": 4.2,
-    "stockQuantity": 10,
     "coverImageUrl": "/example.webp",
     "description": "A coming-of-age novel following Holden Caulfield's journey through teenage angst."
   },
@@ -320,7 +296,6 @@
     "language": "English",
     "yearPublished": 1847,
     "rating": 4.5,
-    "stockQuantity": 7,
     "coverImageUrl": "/example.webp",
     "description": "A tragic love story filled with passion and revenge on the Yorkshire moors."
   },
@@ -333,7 +308,6 @@
     "language": "English",
     "yearPublished": 1890,
     "rating": 4.6,
-    "stockQuantity": 9,
     "coverImageUrl": "/example.webp",
     "description": "A philosophical novel about vanity, corruption, and the pursuit of pleasure."
   },
@@ -346,7 +320,6 @@
     "language": "English",
     "yearPublished": 1939,
     "rating": 4.4,
-    "stockQuantity": 6,
     "coverImageUrl": "/example.webp",
     "description": "A poignant tale of the Great Depression and the struggles of migrant farmers."
   },
@@ -359,7 +332,6 @@
     "language": "Spanish",
     "yearPublished": 1967,
     "rating": 4.7,
-    "stockQuantity": 13,
     "coverImageUrl": "/example.webp",
     "description": "A multi-generational story of the Buendía family and the town of Macondo."
   },
@@ -372,7 +344,6 @@
     "language": "French",
     "yearPublished": 1844,
     "rating": 4.8,
-    "stockQuantity": 8,
     "coverImageUrl": "/example.webp",
     "description": "A gripping tale of betrayal, revenge, and redemption."
   },
@@ -385,7 +356,6 @@
     "language": "English",
     "yearPublished": 1985,
     "rating": 4.5,
-    "stockQuantity": 11,
     "coverImageUrl": "/example.webp",
     "description": "A dark vision of a totalitarian society where women are oppressed."
   },
@@ -398,7 +368,6 @@
     "language": "Russian",
     "yearPublished": 1869,
     "rating": 4.7,
-    "stockQuantity": 5,
     "coverImageUrl": "/example.webp",
     "description": "An epic novel covering history, politics, and the lives of Russian aristocracy."
   },
@@ -411,7 +380,6 @@
     "language": "English",
     "yearPublished": 1965,
     "rating": 4.8,
-    "stockQuantity": 14,
     "coverImageUrl": "/example.webp",
     "description": "A sci-fi epic about power, survival, and destiny on the desert planet Arrakis."
   },
@@ -424,7 +392,6 @@
     "language": "Greek",
     "yearPublished": 1614,
     "rating": 4.6,
-    "stockQuantity": 9,
     "coverImageUrl": "/example.webp",
     "description": "A legendary epic poem about Odysseus' journey home after the Trojan War."
   },
@@ -437,7 +404,6 @@
     "language": "English",
     "yearPublished": 1859,
     "rating": 4.4,
-    "stockQuantity": 10,
     "coverImageUrl": "/example.webp",
     "description": "A dramatic story of love and sacrifice set during the French Revolution."
   },
@@ -450,7 +416,6 @@
     "language": "English",
     "yearPublished": 1927,
     "rating": 4.3,
-    "stockQuantity": 6,
     "coverImageUrl": "/example.webp",
     "description": "A stream-of-consciousness novel exploring perception and memory."
   },
@@ -463,7 +428,6 @@
     "language": "English",
     "yearPublished": 1952,
     "rating": 4.5,
-    "stockQuantity": 7,
     "coverImageUrl": "/example.webp",
     "description": "A powerful exploration of race and identity in America."
   },
@@ -476,7 +440,6 @@
     "language": "Russian",
     "yearPublished": 1880,
     "rating": 4.8,
-    "stockQuantity": 6,
     "coverImageUrl": "/example.webp",
     "description": "A profound novel about faith, doubt, and morality."
   },
@@ -489,7 +452,6 @@
     "language": "English",
     "yearPublished": 1987,
     "rating": 4.6,
-    "stockQuantity": 9,
     "coverImageUrl": "/example.webp",
     "description": "A haunting tale of slavery and its lasting impact on a mother and her daughter."
   },
@@ -502,7 +464,6 @@
     "language": "English",
     "yearPublished": 1897,
     "rating": 4.5,
-    "stockQuantity": 10,
     "coverImageUrl": "/example.webp",
     "description": "The classic Gothic horror novel that introduced Count Dracula to the world."
   },
@@ -515,7 +476,6 @@
     "language": "English",
     "yearPublished": 2006,
     "rating": 4.7,
-    "stockQuantity": 8,
     "coverImageUrl": "/example.webp",
     "description": "A gripping and emotional journey of a father and son in a bleak, ruined world."
   }

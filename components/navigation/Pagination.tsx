@@ -16,7 +16,7 @@ export default function Pagination({ ...paginationProps }: PaginationProps) {
           "rounded-md border border-gray-300 px-3 py-2 text-sm font-medium hover:bg-gray-50",
           currentPage === 1 ? "pointer-events-none bg-gray-100" : ""
         )}
-        href={`/products?page=${currentPage - 1}`}
+        href={`/books?page=${currentPage - 1}`}
       >
         Previous
       </Link>
@@ -34,7 +34,7 @@ export default function Pagination({ ...paginationProps }: PaginationProps) {
               i === 0 ? "rounded-l-md" : "",
               i === pages.length - 1 ? "rounded-r-md" : ""
             )}
-            href={`/products?page=${p}`}
+            href={`/books?page=${p}`}
           >
             {p}
           </Link>

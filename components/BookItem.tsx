@@ -40,9 +40,6 @@ export default async function BookItem(book: Book) {
       <div className="bg-gray-100 py-3 px-4 relative">
         <div className="flex items-center justify-between">
           <p className="text-lg font-semibold text-green-600">${book.price}</p>
-          <span className="text-xs text-gray-500">
-            Stock: {book.stockQuantity}
-          </span>
         </div>
         <div className="flex justify-between items-center mt-2">
           <Link
@@ -51,7 +48,9 @@ export default async function BookItem(book: Book) {
           >
             See More →
           </Link>
-          {session && <AddBookToCart />}
+          {session && (
+            <AddBookToCart bookId={book.id} userId={session.user.id} />
+          )}
         </div>
       </div>
     </div>

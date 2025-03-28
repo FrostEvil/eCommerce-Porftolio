@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import AccountLinks from "./AccountLinks";
 import { usePathname } from "next/navigation";
-import AccountManagement from "./AccountManagement";
 import { Session } from "next-auth";
+import AccountManagement from "./AccountManagement";
+import AccountLinks from "./AccountLinks";
 
 export default function AccountNavgation({
   session,

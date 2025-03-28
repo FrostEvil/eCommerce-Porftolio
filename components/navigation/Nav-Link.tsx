@@ -1,6 +1,5 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import { LinksType } from "@/types/type";
 import { Session } from "next-auth";
 import Link from "next/link";

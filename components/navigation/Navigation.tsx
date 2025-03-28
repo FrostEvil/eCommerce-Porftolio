@@ -1,7 +1,7 @@
 import Link from "next/link";
 import NavLink from "./Nav-Link";
 import { auth } from "@/lib/auth";
-import AccountNavgation from "./AccountNavigation";
+import AccountNavgation from "../account/AccountNavigation";
 
 const navigationLinks = [
   {
@@ -13,6 +13,11 @@ const navigationLinks = [
     href: "/books?page=1",
     text: "Books",
     publicPage: true,
+  },
+  {
+    href: "/cart",
+    text: "Cart",
+    publicPage: false,
   },
 ];
 

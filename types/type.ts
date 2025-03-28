@@ -1,4 +1,5 @@
 import { oAuthProviderEnum, userRoleEnum } from "@/drizzle/schema";
+import { User } from "next-auth";
 
 export type LinksType = {
   href: string;
@@ -32,11 +33,28 @@ export type Book = {
   language: string;
   yearPublished: number;
   rating: number;
-  stockQuantity: number;
   coverImageUrl: string;
   description: string;
   createdAt: Date;
   updatedAt: Date;
+};
+
+export type CartBook = {
+  id: number;
+  userId: User["id"];
+  bookId: Book["id"];
+  title: string;
+  author: string;
+  genre: BookGenre;
+  price: number;
+  language: string;
+  yearPublished: number;
+  rating: number;
+  coverImageUrl: string;
+  description: string;
+  createdAt: Date;
+  updatedAt: Date;
+  amount: number;
 };
 
 export type FormErrors = {

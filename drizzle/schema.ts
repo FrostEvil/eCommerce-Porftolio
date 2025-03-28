@@ -12,6 +12,7 @@ import {
   check,
   serial,
 } from "drizzle-orm/pg-core";
+import { title } from "process";
 
 //ENUM for user roles
 export const userRoleEnum = pgEnum("user_role", ["user", "admin"]);
@@ -94,7 +95,6 @@ export const BookTable = pgTable(
     language: varchar("language", { length: 255 }).notNull(),
     yearPublished: integer("yearPublished").notNull(),
     rating: decimal("rating", { precision: 3, scale: 1 }).notNull(),
-    stockQuantity: integer("stockQuantity").notNull(),
     coverImageUrl: text().notNull(),
     description: text().notNull(),
     createdAt: timestamp("createdAt").defaultNow().notNull(),
@@ -107,7 +107,29 @@ export const BookTable = pgTable(
     ),
 
     check("rating_check", sql`${table.rating} >= 0 AND ${table.rating} <= 5`),
-
-    check("bookQuantity_check", sql`${table.stockQuantity} >= 0`),
   ]
+);
+
+export const UserBookCartTable = pgTable("user_books", {
+  userId: uuid()
+    .notNull()
+    .references(() => UserTable.id, { onDelete: "cascade" }),
+  bookId: serial("bookId").references(() => BookTable.id, {
+    onDelete: "cascade",
+  }),
+  amount: integer("amount").default(1).notNull(),
+});
+
+export const userBookRelationships = relations(
+  UserBookCartTable,
+  ({ one }) => ({
+    user: one(UserTable, {
+      fields: [UserBookCartTable.userId],
+      references: [UserTable.id],
+    }),
+    book: one(BookTable, {
+      fields: [UserBookCartTable.bookId],
+      references: [BookTable.id],
+    }),
+  })
 );

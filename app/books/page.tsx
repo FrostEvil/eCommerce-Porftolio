@@ -1,5 +1,5 @@
 import BookItem from "@/components/BookItem";
-import Pagination from "@/components/Pagination";
+import Pagination from "@/components/navigation/Pagination";
 import { getBooksCount, getBooksWithPagination } from "@/drizzle/bookQueries";
 
 export default async function BooksPage({

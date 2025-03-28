@@ -25,7 +25,6 @@ export default async function BookPage({ params }: ParamsType) {
     coverImageUrl,
     rating,
     price,
-    stockQuantity,
   } = {
     ...slugBook,
   };
@@ -83,10 +82,9 @@ export default async function BookPage({ params }: ParamsType) {
           <div className="flex items-center justify-between border-t pt-6">
             <p className="text-3xl font-bold text-green-600">${price}</p>
             <div className="flex items-center gap-x-3">
-              <span className="text-sm text-gray-500">
-                Stock: {stockQuantity}
-              </span>
-              {session && <AddBookToCart />}
+              {session && (
+                <AddBookToCart bookId={slug} userId={session.user.id} />
+              )}
             </div>
           </div>
         </div>

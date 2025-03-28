@@ -13,7 +13,7 @@ export default function HomePage() {
           <div>
             <p className="text-white text-4xl">
               <Link
-                href="/products?page=1"
+                href="/books?page=1"
                 className="underline underline-offset-8 decoration-blue-700 hover:text-blue-700 duration-200 "
               >
                 Shop Now
