@@ -1,4 +1,4 @@
-import AddBookToCart from "@/components/AddBookToCart";
+import AddBookToCart from "@/components/books/AddBookToCart";
 import { getBookById } from "@/drizzle/bookQueries";
 import { auth } from "@/lib/auth";
 import { Book } from "@/types/type";

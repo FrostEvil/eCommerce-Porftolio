@@ -1,5 +1,5 @@
-import CartBookItem from "@/components/CartBookItem";
-import CartItemsSummary from "@/components/CartItemsSummary";
+import CartBookItem from "@/components/cart/CartBookItem";
+import CartItemsSummary from "@/components/cart/CartItemsSummary";
 import { getCartBooks } from "@/drizzle/cartQueries";
 import { auth } from "@/lib/auth";
 import { CartBook } from "@/types/type";

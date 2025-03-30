@@ -1,8 +1,12 @@
 import "../style/globals.css";
-import { Inter } from "next/font/google";
+import { Inter, Merriweather } from "next/font/google";
 import Navigation from "@/components/navigation/Navigation";
 
-export const inter = Inter({ subsets: ["latin"] });
+// export const inter = Inter({ subsets: ["latin"] });
+export const merriweather = Merriweather({
+  weight: ["400"],
+  subsets: ["latin"],
+});
 
 export default function RootLayout({
   children,
@@ -11,9 +15,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-gray-100`}>
-        <Navigation />
-        {children}
+      <head>
+        <title>LitStore - Your Book Haven</title>
+        <meta
+          name="description"
+          content="Find your next great read at LitStore, your ultimate online bookstore."
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </head>
+      <body className={`${merriweather.className} bg-gray-100`}>
+        <header className="sticky top-0 z-50 bg-white shadow-md">
+          <Navigation />
+        </header>
+        <main>{children}</main>
+        <footer className="bg-gray-800 text-white py-6 text-center">
+          <p>© {new Date().getFullYear()} LitStore. All Rights Reserved.</p>
+        </footer>
       </body>
     </html>
   );

@@ -59,7 +59,6 @@ export async function getCartSummary(userId: User["id"]) {
     0
   );
   return { totalAmount, totalPrice };
-  revalidatePath("/cart");
 }
 
 export async function removeBookFromCart(
@@ -75,4 +74,11 @@ export async function removeBookFromCart(
         eq(UserBookCartTable.bookId, bookId)
       )
     );
+}
+
+export async function removeUserCartBook(userId: User["id"]) {
+  if (!userId) return;
+  await db
+    .delete(UserBookCartTable)
+    .where(eq(UserBookCartTable.userId, userId));
 }

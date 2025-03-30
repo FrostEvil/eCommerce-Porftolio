@@ -7,18 +7,17 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
-import Modal from "./Modal";
+import Modal from "../Modal";
 import { useRouter } from "next/navigation";
-import { UserSession } from "@/types/type";
-import { clearCartBook } from "@/actions/cart-actions";
-import { updateBooksStock } from "@/actions/book-actions";
+import { User } from "next-auth";
+import { removeUserCartBook } from "@/actions/cart-actions";
 
 export default function CheckoutPage({
-  amount,
+  totalPrice,
   userId,
 }: {
-  amount: number;
-  userId: UserSession["userId"];
+  totalPrice: number;
+  userId: User["id"];
 }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -33,9 +32,15 @@ export default function CheckoutPage({
     router.push("/");
   };
 
+  const handleRemoveUserCartBook = async () => {
+    await removeUserCartBook(userId);
+  };
+
   useEffect(() => {
     const fetchClientSecret = async () => {
-      const { clientPaymentIntent, error } = await createPaymentIntents(amount);
+      const { clientPaymentIntent, error } = await createPaymentIntents(
+        totalPrice
+      );
       if (clientPaymentIntent) {
         setClientSecret(clientPaymentIntent);
       } else if (error) {
@@ -43,7 +48,7 @@ export default function CheckoutPage({
       }
     };
     fetchClientSecret();
-  }, [amount]);
+  }, [totalPrice]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -74,8 +79,7 @@ export default function CheckoutPage({
       setErrorMessage(error.message);
     } else if (paymentIntent.status === "succeeded") {
       //add some actions like: clear up a cart items, totalPrice, totalQuantity, update stock in book db
-      updateBooksStock(userId);
-      clearCartBook(userId);
+      handleRemoveUserCartBook();
       setSuccessModal(true);
     } else {
       // The payment UI automatically closes with a success animation.
@@ -135,7 +139,7 @@ export default function CheckoutPage({
         disabled={!stripe || loading}
         className="text-white w-full p-5 bg-black mt-2 rounded-md font-bold disabled:opacity-50 disabled:animate-pulse"
       >
-        {loading ? "Processing..." : `Pay $${amount.toFixed(2)}`}
+        {loading ? "Processing..." : `Pay $${totalPrice.toFixed(2)}`}
       </button>
     </form>
   );

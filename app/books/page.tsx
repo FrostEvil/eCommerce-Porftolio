@@ -1,4 +1,4 @@
-import BookItem from "@/components/BookItem";
+import BookItem from "@/components/books/BookItem";
 import Pagination from "@/components/navigation/Pagination";
 import { getBooksCount, getBooksWithPagination } from "@/drizzle/bookQueries";
 
