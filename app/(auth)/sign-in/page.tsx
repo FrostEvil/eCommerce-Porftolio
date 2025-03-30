@@ -1,4 +1,4 @@
-import SignInForm from "@/components/SignInForm";
+import SignInForm from "@/components/account/SignInForm";
 import Link from "next/link";
 
 export default async function SignIn() {

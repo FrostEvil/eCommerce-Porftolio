@@ -10,7 +10,9 @@ import {
   decimal,
   integer,
   check,
+  serial,
 } from "drizzle-orm/pg-core";
+import { title } from "process";
 
 //ENUM for user roles
 export const userRoleEnum = pgEnum("user_role", ["user", "admin"]);
@@ -63,37 +65,36 @@ export const userOauthAccountRelationships = relations(
 );
 
 //ENUM for genre
-const bookGenreEnym = pgEnum("book_genre", [
+export const bookGenreEnum = pgEnum("book_genre", [
   "Fiction",
   "Sci-Fi",
   "Mystery",
   "Non-Fiction",
-  "Biography",
-  "Self-Help",
-  "Memoir",
-  "Post-Apocalyptic",
-  "Dystopian",
   "Fantasy",
-  "Science",
-  "Historical Fiction",
-  "Thriller",
-  "Horror",
   "Romance",
+  "Classic",
+  "Historical Fiction",
+  "Horror",
+  "Adventure",
+  "Magical Realism",
+  "Dystopian",
+  "Modernist",
+  "Philosophical Fiction",
+  "Post-Apocalyptic Fiction",
 ]);
 
 //Book Table
 export const BookTable = pgTable(
   "books",
   {
-    id: uuid().primaryKey().defaultRandom(),
+    id: serial("id").primaryKey(),
     title: varchar("title", { length: 255 }).notNull(),
     author: varchar("author", { length: 255 }).notNull(),
-    genre: bookGenreEnym().default("Fiction").notNull(),
+    genre: bookGenreEnum().notNull(),
     price: decimal("price", { precision: 10, scale: 2 }).notNull(),
     language: varchar("language", { length: 255 }).notNull(),
     yearPublished: integer("yearPublished").notNull(),
     rating: decimal("rating", { precision: 3, scale: 1 }).notNull(),
-    bookQuantity: integer("bookQuantity").notNull(),
     coverImageUrl: text().notNull(),
     description: text().notNull(),
     createdAt: timestamp("createdAt").defaultNow().notNull(),
@@ -106,7 +107,29 @@ export const BookTable = pgTable(
     ),
 
     check("rating_check", sql`${table.rating} >= 0 AND ${table.rating} <= 5`),
-
-    check("bookQuantity_check", sql`${table.bookQuantity} >= 0`),
   ]
+);
+
+export const UserBookCartTable = pgTable("user_books", {
+  userId: uuid()
+    .notNull()
+    .references(() => UserTable.id, { onDelete: "cascade" }),
+  bookId: serial("bookId").references(() => BookTable.id, {
+    onDelete: "cascade",
+  }),
+  amount: integer("amount").default(1).notNull(),
+});
+
+export const userBookRelationships = relations(
+  UserBookCartTable,
+  ({ one }) => ({
+    user: one(UserTable, {
+      fields: [UserBookCartTable.userId],
+      references: [UserTable.id],
+    }),
+    book: one(BookTable, {
+      fields: [UserBookCartTable.bookId],
+      references: [BookTable.id],
+    }),
+  })
 );

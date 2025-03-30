@@ -8,7 +8,7 @@ import {
   hashPassword,
 } from "@/lib/passwordHasher";
 import { FormErrors } from "@/types/type";
-import { addError } from "@/utils/addError";
+import { addError } from "@/utils/handleLoginFormError";
 import { signInFormSchema, signUpFormSchema } from "@/utils/formSchemas";
 import { redirect } from "next/navigation";
 

@@ -1,6 +1,6 @@
 {
-  "id": "40f5f282-0964-47e0-bc2e-d3eca6d432bd",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "9d72628c-1878-468b-91d0-206bb250e4ca",
+  "prevId": "60bcec90-ff23-4c9f-a6bc-725c5e5c4783",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -57,12 +57,6 @@
           "primaryKey": false,
           "notNull": true
         },
-        "bookQuantity": {
-          "name": "bookQuantity",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
         "coverImageUrl": {
           "name": "coverImageUrl",
           "type": "text",
@@ -103,12 +97,73 @@
         "rating_check": {
           "name": "rating_check",
           "value": "\"books\".\"rating\" >= 0 AND \"books\".\"rating\" <= 5"
-        },
-        "bookQuantity_check": {
-          "name": "bookQuantity_check",
-          "value": "\"books\".\"bookQuantity\" >= 0"
         }
       },
+      "isRLSEnabled": false
+    },
+    "public.user_books": {
+      "name": "user_books",
+      "schema": "",
+      "columns": {
+        "userId": {
+          "name": "userId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bookId": {
+          "name": "bookId",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "amount": {
+          "name": "amount",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        },
+        "price": {
+          "name": "price",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "user_books_userId_users_id_fk": {
+          "name": "user_books_userId_users_id_fk",
+          "tableFrom": "user_books",
+          "tableTo": "users",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "user_books_bookId_books_id_fk": {
+          "name": "user_books_bookId_books_id_fk",
+          "tableFrom": "user_books",
+          "tableTo": "books",
+          "columnsFrom": [
+            "bookId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
       "isRLSEnabled": false
     },
     "public.user_oauth_accounts": {
@@ -271,17 +326,17 @@
         "Sci-Fi",
         "Mystery",
         "Non-Fiction",
-        "Biography",
-        "Self-Help",
-        "Memoir",
-        "Post-Apocalyptic",
-        "Dystopian",
         "Fantasy",
-        "Science",
+        "Romance",
+        "Classic",
         "Historical Fiction",
-        "Thriller",
         "Horror",
-        "Romance"
+        "Adventure",
+        "Magical Realism",
+        "Dystopian",
+        "Modernist",
+        "Philosophical Fiction",
+        "Post-Apocalyptic Fiction"
       ]
     },
     "public.oauth_provides": {

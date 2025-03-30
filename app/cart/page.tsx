@@ -1,11 +1,15 @@
-import CartItem from "@/components/CartItem";
-import CartItemsSummary from "@/components/CartItemsSummary";
+import CartBookItem from "@/components/cart/CartBookItem";
+import CartItemsSummary from "@/components/cart/CartItemsSummary";
+import { getCartBooks } from "@/drizzle/cartQueries";
+import { auth } from "@/lib/auth";
 import { CartBook } from "@/types/type";
-import fetchCartUtils from "@/utils/cartUtils";
 
 export default async function CartPage() {
-  const { cartItems, cartSummaryValues } = await fetchCartUtils();
-
+  const session = await auth();
+  const userCartBooks: CartBook[] | undefined = await getCartBooks(
+    session?.user.id
+  );
+  if (!userCartBooks) return;
   return (
     <main className="container mx-auto px-6 py-12">
       <div>
@@ -20,21 +24,21 @@ export default async function CartPage() {
       </div>
       <div className=" grid grid-cols-5 gap-x-8">
         <div className="col-span-3 bg-white">
-          {cartItems.length === 0 ? (
+          {userCartBooks.length === 0 ? (
             <p className="px-6 py-4 text-lg text-gray-700">
               Your cart is empty! 📚 Browse our collection and add your favorite
               books to start your reading journey. Head back to the product page
               and find your next great read! 🚀
             </p>
           ) : (
-            cartItems.map((cartBook: CartBook) => {
-              return <CartItem {...cartBook} key={cartBook.id} />;
+            userCartBooks.map((cartBook) => {
+              return <CartBookItem cartBook={cartBook} key={cartBook.id} />;
             })
           )}
         </div>
 
         <div className="bg-white col-span-2">
-          <CartItemsSummary {...cartSummaryValues} />
+          <CartItemsSummary />
         </div>
       </div>
     </main>

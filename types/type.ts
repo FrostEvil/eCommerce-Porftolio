@@ -1,4 +1,5 @@
 import { oAuthProviderEnum, userRoleEnum } from "@/drizzle/schema";
+import { User } from "next-auth";
 
 export type LinksType = {
   href: string;
@@ -6,31 +7,54 @@ export type LinksType = {
   publicPage: boolean;
 };
 
-export type User = {
-  id: number;
-  id: number;
-  email: string;
-  password: string;
-};
-
-export type SessionPayload = {
-  userId: number;
-  userId: number;
-  expiresAt: Date;
-};
+export type BookGenre =
+  | "Fiction"
+  | "Sci-Fi"
+  | "Mystery"
+  | "Non-Fiction"
+  | "Fantasy"
+  | "Romance"
+  | "Classic"
+  | "Historical Fiction"
+  | "Horror"
+  | "Adventure"
+  | "Magical Realism"
+  | "Dystopian"
+  | "Modernist"
+  | "Philosophical Fiction"
+  | "Post-Apocalyptic Fiction";
 
 export type Book = {
   id: number;
   title: string;
   author: string;
-  genre: string;
+  genre: BookGenre;
   price: number;
   language: string;
   yearPublished: number;
   rating: number;
-  stockQuantity: number;
   coverImageUrl: string;
   description: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type CartBook = {
+  id: number;
+  userId: User["id"];
+  bookId: Book["id"];
+  title: string;
+  author: string;
+  genre: BookGenre;
+  price: number;
+  language: string;
+  yearPublished: number;
+  rating: number;
+  coverImageUrl: string;
+  description: string;
+  createdAt: Date;
+  updatedAt: Date;
+  amount: number;
 };
 
 export type FormErrors = {
@@ -43,3 +67,9 @@ export type FormErrors = {
 export type UserRole = (typeof userRoleEnum.enumValues)[number];
 
 export type ProviderType = (typeof oAuthProviderEnum.enumValues)[number];
+
+export type PaginationProps = {
+  page?: number;
+  totalPages: number;
+  hasNextPage: boolean;
+};
