@@ -3,6 +3,7 @@ import { Book } from "@/types/type";
 import Image from "next/image";
 import Link from "next/link";
 import AddBookToCart from "./AddBookToCart";
+import RatingValue from "../RatingValue";
 
 export default async function BookItem(book: Book) {
   const session = await auth();
@@ -30,8 +31,7 @@ export default async function BookItem(book: Book) {
         </p>
         {/* Rating Display */}
         <div className="flex items-center gap-1 text-yellow-500 text-sm">
-          {"★".repeat(Math.round(book.rating))}
-          {"☆".repeat(5 - Math.round(book.rating))}
+          <RatingValue value={book.rating} />
           <span className="text-gray-600 text-xs ml-1">({book.rating})</span>
         </div>
       </div>
