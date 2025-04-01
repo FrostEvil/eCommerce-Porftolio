@@ -1,3 +1,4 @@
+import RatingValue from "@/components/RatingValue";
 import AddBookToCart from "@/components/books/AddBookToCart";
 import { getBookById } from "@/drizzle/bookQueries";
 import { auth } from "@/lib/auth";
@@ -72,8 +73,7 @@ export default async function BookPage({ params }: ParamsType) {
           <div className="mb-6 gap-y-2 flex flex-col">
             {showBookDetails}
             <div className="flex items-center gap-1 text-yellow-500 text-lg">
-              {"★".repeat(Math.round(rating))}
-              {"☆".repeat(5 - Math.round(rating))}
+              <RatingValue value={rating} />
               <span className="text-gray-600 text-base ml-1">({rating})</span>
             </div>
           </div>

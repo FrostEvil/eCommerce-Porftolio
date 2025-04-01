@@ -23,7 +23,7 @@ export default {
     },
     extend: {
       backgroundImage: {
-        "hero-pattern": "url('../public/bg.webp')",
+        "hero-pattern": "url('../public/bg.png')",
       },
       borderRadius: {
         lg: "var(--radius)",

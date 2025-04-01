@@ -1,8 +1,8 @@
 import "../style/globals.css";
-import { Inter, Merriweather } from "next/font/google";
+import { Merriweather } from "next/font/google";
 import Navigation from "@/components/navigation/Navigation";
+import Footer from "@/components/Footer";
 
-// export const inter = Inter({ subsets: ["latin"] });
 export const merriweather = Merriweather({
   weight: ["400"],
   subsets: ["latin"],
@@ -28,9 +28,7 @@ export default function RootLayout({
           <Navigation />
         </header>
         <main>{children}</main>
-        <footer className="bg-gray-800 text-white py-6 text-center">
-          <p>© {new Date().getFullYear()} LitStore. All Rights Reserved.</p>
-        </footer>
+        <Footer />
       </body>
     </html>
   );
