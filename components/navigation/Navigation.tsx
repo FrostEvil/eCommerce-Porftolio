@@ -1,25 +1,5 @@
-import Link from "next/link";
-import NavLink from "./Nav-Link";
 import { auth } from "@/lib/auth";
-import AccountNavgation from "../account/AccountNavigation";
-
-const navigationLinks = [
-  {
-    href: "/",
-    text: "Home",
-    publicPage: true,
-  },
-  {
-    href: "/books?page=1",
-    text: "Books",
-    publicPage: true,
-  },
-  {
-    href: "/cart",
-    text: "Cart",
-    publicPage: false,
-  },
-];
+import NavBarMenu from "./NavBarMenu";
 
 export default async function Navigation() {
   const session = await auth();
@@ -27,21 +7,11 @@ export default async function Navigation() {
   return (
     <header
       className="bg-gradient-to-r from-blue-200 via-blue-50 to-blue-300
- w-full h-12 flex justify-center"
+ w-full h-10 md:h-12 flex justify-center"
     >
-      <nav className="container mx-auto">
-        <div className="h-full flex justify-between items-center">
-          <div className="text-xl font-bold">
-            <Link href="/">LitStore</Link>
-          </div>
-          <ul className=" flex gap-x-10 uppercase items-center text-lg font-medium ">
-            {navigationLinks.map((link) => {
-              return <NavLink key={link.href} {...link} session={session} />;
-            })}
-            <li>
-              <AccountNavgation session={session} />
-            </li>
-          </ul>
+      <nav className="w-full md:container mx-auto">
+        <div className="relative h-full flex justify-center md:justify-between  items-center">
+          <NavBarMenu session={session} />
         </div>
       </nav>
     </header>
