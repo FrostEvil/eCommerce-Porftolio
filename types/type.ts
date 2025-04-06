@@ -73,3 +73,10 @@ export type PaginationProps = {
   totalPages: number;
   hasNextPage: boolean;
 };
+
+export type FilterRatingValues = {
+  starsAmount: number;
+  label: string;
+  checked: boolean;
+  range: { from: number; to: number };
+};

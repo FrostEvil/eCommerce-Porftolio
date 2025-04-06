@@ -1,3 +1,4 @@
+import BookFilterPanel from "@/components/books/BookFilterPanel";
 import BookItem from "@/components/books/BookItem";
 import Pagination from "@/components/navigation/Pagination";
 import { getBooksCount, getBooksWithPagination } from "@/drizzle/bookQueries";
@@ -33,12 +34,17 @@ export default async function BooksPage({
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-        {currentPageBooks.map((book) => {
-          return book ? <BookItem {...book} key={book.id} /> : "";
-        })}
+      <div className="grid grid-cols-4 mt-8 gap-6">
+        <BookFilterPanel />
+        <div className="col-span-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
+            {currentPageBooks.map((book) => {
+              return book ? <BookItem {...book} key={book.id} /> : "";
+            })}
+          </div>
+          <Pagination {...paginationProps} />
+        </div>
       </div>
-      <Pagination {...paginationProps} />
     </main>
   );
 }
