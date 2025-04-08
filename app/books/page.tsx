@@ -1,27 +1,15 @@
+import AllBooksList from "@/components/books/AllBooksList";
 import BookFilterPanel from "@/components/books/BookFilterPanel";
-import BookItem from "@/components/books/BookItem";
-import Pagination from "@/components/navigation/Pagination";
-import { getBooksCount, getBooksWithPagination } from "@/drizzle/bookQueries";
 
 export default async function BooksPage({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const booksPerPage = Number(process.env.BOOKS_PER_PAGE);
+  const params = await searchParams;
+  console.log("params:", params);
   const pageNumber = Number((await searchParams).page);
-  const booksToSkip = (pageNumber - 1) * booksPerPage;
-  const currentPageBooks = await getBooksWithPagination(
-    booksToSkip,
-    booksPerPage
-  );
-  const booksAmout: number = await getBooksCount();
 
-  const paginationProps = {
-    page: pageNumber,
-    totalPages: Math.ceil(booksAmout / booksPerPage),
-    hasNextPage: currentPageBooks.length === booksPerPage ? true : false,
-  };
   return (
     <main className="container">
       <div className="text-center my-12">
@@ -36,14 +24,12 @@ export default async function BooksPage({
 
       <div className="grid grid-cols-4 mt-8 gap-6">
         <BookFilterPanel />
-        <div className="col-span-3">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
-            {currentPageBooks.map((book) => {
-              return book ? <BookItem {...book} key={book.id} /> : "";
-            })}
-          </div>
-          <Pagination {...paginationProps} />
-        </div>
+
+        {Object.keys(params).length > 1 ? (
+          <div>Hello world</div>
+        ) : (
+          <AllBooksList pageNumber={pageNumber} />
+        )}
       </div>
     </main>
   );

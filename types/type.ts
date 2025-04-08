@@ -74,9 +74,9 @@ export type PaginationProps = {
   hasNextPage: boolean;
 };
 
-export type FilterRatingValues = {
-  starsAmount: number;
-  label: string;
-  checked: boolean;
-  range: { from: number; to: number };
+export type FiltersProps = {
+  minPrice: number;
+  maxPrice: number;
+  genre: string;
+  rating: number[];
 };
