@@ -1,43 +1,36 @@
-import { getBooksCount, getBooksWithPagination } from "@/drizzle/bookQueries";
-import Pagination from "../navigation/Pagination";
-import BookItem from "./BookItem";
+import AllBooksList from "@/components/books/AllBooksList";
+import BookFilterPanel from "@/components/books/BookFilterPanel";
+import { Book } from "@/types/type";
 
-type FilteredBooksListProps = {
-  page: string;
-  minPrice?: string;
-  maxPrice?: string;
-  genre?: string;
-  rating?: string[];
-};
-
-export default async function FilteredBooksList({
-  props,
+export default async function BooksPage({
+  searchParams,
 }: {
-  props: FilteredBooksListProps;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const booksPerPage = Number(process.env.BOOKS_PER_PAGE);
+  const params = await searchParams;
+  const pageNumber = Number((await searchParams).page);
 
-  const booksToSkip = (pageNumber - 1) * booksPerPage;
-
-  const currentPageBooks = await getBooksWithPagination(
-    booksToSkip,
-    booksPerPage
-  );
-  const booksAmout: number = await getBooksCount();
-
-  const paginationProps = {
-    page: pageNumber,
-    totalPages: Math.ceil(booksAmout / booksPerPage),
-    hasNextPage: currentPageBooks.length === booksPerPage ? true : false,
-  };
   return (
-    <div className="col-span-3">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
-        {currentPageBooks.map((book) => {
-          return book ? <BookItem {...book} key={book.id} /> : "";
-        })}
+    <main className="container">
+      <div className="text-center my-12">
+        <h1 className="text-5xl font-extrabold text-gray-900">
+          Discover Your Next <span className="text-blue-500">Great Read!</span>
+        </h1>
+        <p className="mt-4 text-lg text-gray-600">
+          Dive into our curated collection of books across all genres and
+          styles.
+        </p>
       </div>
-      <Pagination {...paginationProps} />
-    </div>
+
+      <div className="grid grid-cols-4 mt-8 gap-6">
+        <BookFilterPanel />
+
+        {Object.keys(params).length > 1 ? (
+          <div>Hello world</div>
+        ) : (
+          <AllBooksList pageNumber={pageNumber} />
+        )}
+      </div>
+    </main>
   );
 }

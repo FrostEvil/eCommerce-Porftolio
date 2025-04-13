@@ -4,11 +4,10 @@ import getPagesToShow from "@/utils/paginationPagesToShow";
 import Link from "next/link";
 
 export default function Pagination({ ...paginationProps }: PaginationProps) {
-  const { page, totalPages, hasNextPage } = paginationProps;
-  const currentPage = Math.min(Math.max(Number(page), 1), totalPages);
+  const { pageNumber, totalPages, hasNextPage, queryRoute } = paginationProps;
+  const currentPage = Math.min(Math.max(Number(pageNumber), 1), totalPages);
 
   const pages = getPagesToShow({ currentPage, totalPages });
-
   return (
     <div className="my-10 flex items-center justify-center space-x-6 text-black">
       <Link
@@ -16,7 +15,7 @@ export default function Pagination({ ...paginationProps }: PaginationProps) {
           "rounded-md border border-gray-300 px-3 py-2 text-sm font-medium hover:bg-gray-50",
           currentPage === 1 ? "pointer-events-none bg-gray-100" : ""
         )}
-        href={`/books?page=${currentPage - 1}`}
+        href={`/books?page=${currentPage - 1}&${queryRoute}`}
       >
         Previous
       </Link>
@@ -34,7 +33,7 @@ export default function Pagination({ ...paginationProps }: PaginationProps) {
               i === 0 ? "rounded-l-md" : "",
               i === pages.length - 1 ? "rounded-r-md" : ""
             )}
-            href={`/books?page=${p}`}
+            href={`/books?page=${p}&${queryRoute}`}
           >
             {p}
           </Link>
@@ -46,7 +45,7 @@ export default function Pagination({ ...paginationProps }: PaginationProps) {
           "rounded-md border border-gray-300 px-3 py-2 text-sm font-medium hover:bg-gray-50",
           !hasNextPage ? "pointer-events-none bg-gray-100" : ""
         )}
-        href={`/books?page=${currentPage + 1}`}
+        href={`/books?page=${currentPage + 1}&${queryRoute}`}
       >
         Next
       </Link>

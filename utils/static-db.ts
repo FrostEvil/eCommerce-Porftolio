@@ -50,17 +50,6 @@ export const genresArr = [
       "Explore futuristic technology, space adventures, and alien encounters.",
   },
   {
-    name: "Mystery",
-    slug: "mystery",
-    description:
-      "Solve thrilling cases and uncover hidden secrets with every page.",
-  },
-  {
-    name: "Non-Fiction",
-    slug: "non-fiction",
-    description: "Real stories, facts, and insights to expand your knowledge.",
-  },
-  {
     name: "Fantasy",
     slug: "fantasy",
     description:
@@ -106,22 +95,5 @@ export const genresArr = [
     slug: "dystopian",
     description:
       "Dark, thought-provoking worlds exploring futuristic societies.",
-  },
-  {
-    name: "Modernist",
-    slug: "modernist",
-    description:
-      "Innovative narratives that challenge traditional storytelling.",
-  },
-  {
-    name: "Philosophical Fiction",
-    slug: "philosophical-fiction",
-    description:
-      "Deep, thought-provoking narratives exploring life's big questions.",
-  },
-  {
-    name: "Post-Apocalyptic Fiction",
-    slug: "post-apocalyptic-fiction",
-    description: "Survival stories set in worlds after catastrophic events.",
   },
 ];

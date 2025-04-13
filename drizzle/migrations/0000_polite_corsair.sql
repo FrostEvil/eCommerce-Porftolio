@@ -1,4 +1,4 @@
-CREATE TYPE "public"."book_genre" AS ENUM('Fiction', 'Sci-Fi', 'Mystery', 'Non-Fiction', 'Fantasy', 'Romance', 'Classic', 'Historical Fiction', 'Horror', 'Adventure', 'Magical Realism', 'Dystopian', 'Modernist', 'Philosophical Fiction', 'Post-Apocalyptic Fiction');--> statement-breakpoint
+CREATE TYPE "public"."book_genre" AS ENUM('Fiction', 'Sci-Fi', 'Fantasy', 'Classic', 'Romance', 'Historical Fiction', 'Horror', 'Adventure', 'Magical Realism', 'Dystopian');--> statement-breakpoint
 CREATE TYPE "public"."oauth_provides" AS ENUM('google', 'discord', 'github');--> statement-breakpoint
 CREATE TYPE "public"."user_role" AS ENUM('user', 'admin');--> statement-breakpoint
 CREATE TABLE "books" (
@@ -21,8 +21,7 @@ CREATE TABLE "books" (
 CREATE TABLE "user_books" (
 	"userId" uuid NOT NULL,
 	"bookId" serial NOT NULL,
-	"amount" integer DEFAULT 1 NOT NULL,
-	"price" numeric(10, 2) NOT NULL
+	"amount" integer DEFAULT 1 NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "user_oauth_accounts" (

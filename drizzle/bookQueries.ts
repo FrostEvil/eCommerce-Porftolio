@@ -1,13 +1,14 @@
 import "dotenv/config"; // Loads .env automatically
 import fs from "fs";
 import { db } from "./db";
-import { BookTable, UserTable } from "./schema";
-import { Book } from "@/types/type";
-import { eq, sql } from "drizzle-orm";
+import { BookTable } from "./schema";
+import { Book, FiltersProps } from "@/types/type";
+import { and, eq, gte, lte, or, sql } from "drizzle-orm";
 
-// Read books from JSON file
-const books = JSON.parse(fs.readFileSync("books.json", "utf-8"));
 async function insertBooks() {
+  // Read books from JSON file
+  const books = JSON.parse(fs.readFileSync("books.json", "utf-8"));
+
   try {
     await db.insert(BookTable).values(books);
   } catch (error) {
@@ -28,6 +29,56 @@ export async function getAllBooks(): Promise<Book[]> {
   return updatedBooks;
 }
 
+export async function getFilteredBooks({
+  minPrice,
+  maxPrice,
+  genre,
+  rating,
+}: FiltersProps) {
+  let conditions = [];
+
+  if (minPrice !== undefined) {
+    conditions.push(gte(BookTable.price, minPrice.toString()));
+  }
+
+  if (maxPrice !== undefined) {
+    conditions.push(lte(BookTable.price, maxPrice.toString()));
+  }
+
+  if (genre !== undefined && genre !== "") {
+    conditions.push(eq(BookTable.genre, genre));
+  }
+
+  if (rating !== undefined && rating.length > 0) {
+    const ratingArr = [...rating];
+
+    const ratingConditions = ratingArr.map((rate) => {
+      const lower = Number(rate) === 1 ? 0.0 : Number(rate) - 0.5;
+      const upper = Number(rate) === 5 ? 5.0 : Number(rate) + 0.5;
+
+      return and(
+        gte(BookTable.rating, lower.toString()),
+        lte(BookTable.rating, upper.toString())
+      );
+    });
+    conditions.push(or(...ratingConditions));
+    // }
+  }
+
+  const books = await db
+    .select()
+    .from(BookTable)
+    .where(conditions.length > 0 ? and(...conditions) : undefined);
+
+  const updatedBooks = books.map((book) => ({
+    ...book,
+    price: parseFloat(book.price),
+    rating: parseFloat(book.rating),
+  }));
+
+  return updatedBooks;
+}
+
 export async function getBooksCount() {
   const countResult = await db
     .select({ count: sql<number>`COUNT(*)` })
@@ -36,7 +87,10 @@ export async function getBooksCount() {
   return countResult[0].count;
 }
 
-export async function getBooksWithPagination(skip: number, take: number) {
+export async function getFilteredBooksWithPagination(
+  skip: number,
+  take: number
+) {
   const books = await db.select().from(BookTable).offset(skip).limit(take);
 
   const updatedBooks = books.map((book) => ({
@@ -44,6 +98,7 @@ export async function getBooksWithPagination(skip: number, take: number) {
     price: parseFloat(book.price),
     rating: parseFloat(book.rating),
   }));
+
   return updatedBooks;
 }
 

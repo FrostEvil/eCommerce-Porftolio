@@ -10,19 +10,14 @@ export type LinksType = {
 export type BookGenre =
   | "Fiction"
   | "Sci-Fi"
-  | "Mystery"
-  | "Non-Fiction"
   | "Fantasy"
-  | "Romance"
   | "Classic"
+  | "Romance"
   | "Historical Fiction"
   | "Horror"
   | "Adventure"
   | "Magical Realism"
-  | "Dystopian"
-  | "Modernist"
-  | "Philosophical Fiction"
-  | "Post-Apocalyptic Fiction";
+  | "Dystopian";
 
 export type Book = {
   id: number;
@@ -69,14 +64,16 @@ export type UserRole = (typeof userRoleEnum.enumValues)[number];
 export type ProviderType = (typeof oAuthProviderEnum.enumValues)[number];
 
 export type PaginationProps = {
-  page?: number;
+  pageNumber: number;
   totalPages: number;
   hasNextPage: boolean;
+  queryRoute: string;
 };
 
 export type FiltersProps = {
-  minPrice: number;
-  maxPrice: number;
-  genre: string;
-  rating: number[];
+  page?: number;
+  minPrice?: number;
+  maxPrice?: number;
+  genre?: BookGenre | "";
+  rating?: number[];
 };
