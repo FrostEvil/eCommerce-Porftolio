@@ -7,8 +7,10 @@ const getPagesToShow = (props: GetPagesToShowProps) => {
   const { currentPage, totalPages } = props;
   let startPage = currentPage - 2;
   let endPage = currentPage + 2;
-
-  if (currentPage <= 3) {
+  if (totalPages < 5) {
+    startPage = 1;
+    endPage = totalPages;
+  } else if (currentPage <= 3) {
     startPage = 1;
     endPage = 5;
   } else if (currentPage >= totalPages - 2) {

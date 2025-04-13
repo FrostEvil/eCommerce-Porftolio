@@ -12,7 +12,6 @@ import {
   check,
   serial,
 } from "drizzle-orm/pg-core";
-import { title } from "process";
 
 //ENUM for user roles
 export const userRoleEnum = pgEnum("user_role", ["user", "admin"]);
@@ -68,19 +67,14 @@ export const userOauthAccountRelationships = relations(
 export const bookGenreEnum = pgEnum("book_genre", [
   "Fiction",
   "Sci-Fi",
-  "Mystery",
-  "Non-Fiction",
   "Fantasy",
-  "Romance",
   "Classic",
+  "Romance",
   "Historical Fiction",
   "Horror",
   "Adventure",
   "Magical Realism",
   "Dystopian",
-  "Modernist",
-  "Philosophical Fiction",
-  "Post-Apocalyptic Fiction",
 ]);
 
 //Book Table

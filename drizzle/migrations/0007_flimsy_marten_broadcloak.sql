@@ -1,1 +1,0 @@
-ALTER TABLE "user_books" ALTER COLUMN "bookId" SET DATA TYPE uuid;
