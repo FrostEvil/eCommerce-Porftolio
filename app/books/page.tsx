@@ -1,5 +1,6 @@
 import BookFilterPanel from "@/components/books/BookFilterPanel";
 import BookItem from "@/components/books/BookItem";
+import BookSortingPanel from "@/components/books/BookSortingPanel";
 import Pagination from "@/components/navigation/Pagination";
 import { getFilteredBooks } from "@/drizzle/bookQueries";
 import { BookGenre } from "@/types/type";
@@ -14,7 +15,6 @@ export default async function BooksPage({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const rawParams = await searchParams;
-
   const page = rawParams.page ? Number(rawParams.page) : 1;
   const minPrice = rawParams.minPrice ? Number(rawParams.minPrice) : undefined;
   const maxPrice = rawParams.maxPrice ? Number(rawParams.maxPrice) : undefined;
@@ -27,11 +27,14 @@ export default async function BooksPage({
     ? [Number(rawParams.rating)]
     : undefined;
 
+  const sort = typeof rawParams.sort === "string" ? rawParams.sort : undefined;
+
   const filteredBooks = await getFilteredBooks({
     minPrice,
     maxPrice,
     genre,
     rating,
+    sort,
   });
 
   const { paginatedBooks, booksAmount } = getPaginatedBooks({
@@ -44,8 +47,9 @@ export default async function BooksPage({
     pageNumber: page,
     totalPages: Math.ceil(booksAmount / PAGE_SIZE),
     hasNextPage: paginatedBooks.length === PAGE_SIZE ? true : false,
-    queryRoute: filterQuery({ minPrice, maxPrice, genre, rating }),
+    queryRoute: filterQuery({ minPrice, maxPrice, genre, rating, sort }),
   };
+
   return (
     <main className="container">
       <div className="text-center my-12">
@@ -57,17 +61,25 @@ export default async function BooksPage({
           styles.
         </p>
       </div>
+      <div className=" px-12 grid grid-cols-2 gap-x-4">
+        <button className="h-10 px-3 py-2 text-sm border border-neutral-200 bg-white">
+          Filters
+        </button>
+        <BookSortingPanel sort={sort} />
+      </div>
+      <div className="grid grid-cols-3 lg:grid-cols-4 mt-4 gap-2 md:gap-4 lg:gap-6">
+        <div className="hidden md:block">
+          <BookFilterPanel
+            queryMinPrice={minPrice}
+            queryMaxPrice={maxPrice}
+            queryGenre={genre}
+            queryCheckedRatings={rating}
+            sort={sort}
+          />
+        </div>
 
-      <div className="grid grid-cols-4 mt-8 gap-6">
-        <BookFilterPanel
-          queryMinPrice={minPrice}
-          queryMaxPrice={maxPrice}
-          queryGenre={genre}
-          queryCheckedRatings={rating}
-        />
-
-        <div className="col-span-3">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
+        <div className="col-span-3 lg:col-span-3">
+          <div className="px-12 md:px-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 xl:gap-8 ">
             {paginatedBooks.map((book) => {
               return book ? <BookItem {...book} key={book.id} /> : "";
             })}

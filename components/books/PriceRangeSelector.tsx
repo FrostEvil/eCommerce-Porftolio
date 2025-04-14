@@ -55,7 +55,7 @@ export default function PriceRangeSelector({
             }
           }}
           value={minPrice}
-          className="border-gray-300 cursor-not-allowed px-4 py-2 rounded-lg w-24 text-center"
+          className="border-gray-300 cursor-not-allowed px-4 py-2 rounded-lg w-16 lg:w-20 xl:w-24 text-center"
         />
         <label htmlFor="maxPrice-input" className="sr-only">
           Maximal price
@@ -70,7 +70,7 @@ export default function PriceRangeSelector({
               setMaxPrice(defaultMaxPrice);
             }
           }}
-          className="border-gray-300 cursor-not-allowed px-4 py-2 rounded-lg w-24 text-center"
+          className="border-gray-300 cursor-not-allowed px-4 py-2 rounded-lg w-16 lg:w-20 xl:w-24 text-center"
           value={maxPrice}
         />
       </div>
