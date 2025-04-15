@@ -22,8 +22,10 @@ export default function PriceRangeSelector({
   minRangeValue,
 }: PriceRangeSelectorProps) {
   return (
-    <div className="flex flex-col gap-y-4">
-      <h2 className="text-base font-semibold text-gray-700">Price:</h2>
+    <div className="basis-full sm:basis-1/4 flex flex-col gap-y-4">
+      <h2 className="text-sm md:text-base font-semibold text-gray-700">
+        Price:
+      </h2>
       <label htmlFor="price-slider" className="sr-only">
         Price range
       </label>
@@ -55,7 +57,7 @@ export default function PriceRangeSelector({
             }
           }}
           value={minPrice}
-          className="border-gray-300 cursor-not-allowed px-4 py-2 rounded-lg w-16 lg:w-20 xl:w-24 text-center"
+          className="border-gray-300 text-sm md:text-base cursor-not-allowed px-4 py-2 rounded-lg w-16 lg:w-20 xl:w-24 text-center"
         />
         <label htmlFor="maxPrice-input" className="sr-only">
           Maximal price
@@ -70,7 +72,7 @@ export default function PriceRangeSelector({
               setMaxPrice(defaultMaxPrice);
             }
           }}
-          className="border-gray-300 cursor-not-allowed px-4 py-2 rounded-lg w-16 lg:w-20 xl:w-24 text-center"
+          className="border-gray-300 text-sm md:text-base  cursor-not-allowed px-4 py-2 rounded-lg w-16 lg:w-20 xl:w-24 text-center"
           value={maxPrice}
         />
       </div>

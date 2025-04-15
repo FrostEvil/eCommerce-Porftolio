@@ -53,33 +53,26 @@ export default async function BooksPage({
   return (
     <main className="container">
       <div className="text-center my-12">
-        <h1 className="text-5xl font-extrabold text-gray-900">
+        <h1 className="text-2xl md:text-4xl lg:text-5xl font-extrabold text-gray-900">
           Discover Your Next <span className="text-blue-500">Great Read!</span>
         </h1>
-        <p className="mt-4 text-lg text-gray-600">
+        <p className="mt-4 text-base lg:text-lg text-gray-600">
           Dive into our curated collection of books across all genres and
           styles.
         </p>
       </div>
-      <div className=" px-12 grid grid-cols-2 gap-x-4">
-        <button className="h-10 px-3 py-2 text-sm border border-neutral-200 bg-white">
-          Filters
-        </button>
-        <BookSortingPanel sort={sort} />
-      </div>
-      <div className="grid grid-cols-3 lg:grid-cols-4 mt-4 gap-2 md:gap-4 lg:gap-6">
-        <div className="hidden md:block">
-          <BookFilterPanel
-            queryMinPrice={minPrice}
-            queryMaxPrice={maxPrice}
-            queryGenre={genre}
-            queryCheckedRatings={rating}
-            sort={sort}
-          />
-        </div>
+      <BookSortingPanel sort={sort} />
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 place-items-center md:place-items-start mt-4 md:gap-4 lg:gap-6">
+        <BookFilterPanel
+          queryMinPrice={minPrice}
+          queryMaxPrice={maxPrice}
+          queryGenre={genre}
+          queryCheckedRatings={rating}
+          sort={sort}
+        />
 
-        <div className="col-span-3 lg:col-span-3">
-          <div className="px-12 md:px-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 xl:gap-8 ">
+        <div className="col-span-3 md:col-span-2 lg:col-span-3 w-full">
+          <div className="px-12 md:px-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-stretch gap-y-12">
             {paginatedBooks.map((book) => {
               return book ? <BookItem {...book} key={book.id} /> : "";
             })}

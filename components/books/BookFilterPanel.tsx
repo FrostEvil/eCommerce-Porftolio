@@ -60,7 +60,7 @@ export default function BookFilterPanel({
   };
 
   return (
-    <div className=" mb-12 py-8 md:px-4 flex flex-col gap-y-8 bg-white h-fit shadow-md">
+    <div className="w-1/2 sm:w-full md:w-full mb-12  py-4 md:py-8 px-4 sm:px-6 md:px-8 flex flex-col sm:flex-row md:flex-col gap-x-4 md:gap-x-0 gap-y-8 bg-white h-fit shadow-md">
       <PriceRangeSelector
         minPrice={minPrice}
         maxPrice={maxPrice}

@@ -66,8 +66,8 @@ export default function BookSortingPanel({
     router.push(`/books?${currentParams}`);
   };
   return (
-    <div className="flex justify-end">
-      <div className="w-full md:w-[260px] lg:w-[280px]">
+    <div className="flex justify-center md:justify-end">
+      <div className="w-1/2 md:w-[260px] lg:w-[280px]">
         <Select
           value={sortingContentValue}
           onValueChange={handleSelectSortingMethod}

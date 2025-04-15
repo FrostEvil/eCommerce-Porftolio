@@ -58,13 +58,15 @@ export default function RatingCheckboxGroup({
   };
 
   return (
-    <div>
-      <h2 className="text-base font-semibold text-gray-700">Book Rating:</h2>
+    <div className="basis-full sm:basis-1/4">
+      <h2 className="text-sm md:text-base font-semibold text-gray-700">
+        Book Rating:
+      </h2>
       <div className="mt-2 items-top flex flex-col space-y-3">
         {ratingValues.map((ratings) => {
           return (
             <div
-              className="flex gap-x-2 leading-none"
+              className="flex gap-x-1 md:gap-x-2 leading-none"
               key={ratings.starsAmount}
             >
               <label
@@ -80,9 +82,9 @@ export default function RatingCheckboxGroup({
                   handleCheckedRatings(ratings.starsAmount)
                 }
               />
-              <label className="flex gap-x-2 items-center text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              <label className="flex gap-x-2 items-center text-xs md:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                 <RatingValue value={ratings.starsAmount} />
-                <p className="text-gray-800">{ratings.label}</p>
+                <p className="hidden lg:block text-gray-800">{ratings.label}</p>
               </label>
             </div>
           );
