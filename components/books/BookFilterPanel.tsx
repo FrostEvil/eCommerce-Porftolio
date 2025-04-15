@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { buildFilterQueryRoute } from "@/utils/buildFilterQuery";
 import PriceRangeSelector from "./PriceRangeSelector";
 import RatingCheckboxGroup from "./RatingCheckboxGroup";
@@ -19,6 +19,7 @@ type BookFilterPanelProps = {
   queryMaxPrice?: number;
   queryGenre?: BookGenre | "";
   queryCheckedRatings?: number[];
+  sort?: string;
 };
 
 export default function BookFilterPanel({
@@ -26,6 +27,7 @@ export default function BookFilterPanel({
   queryMaxPrice,
   queryGenre,
   queryCheckedRatings,
+  sort,
 }: BookFilterPanelProps) {
   const [minPrice, setMinPrice] = useState(queryMinPrice ?? DEFAULT_MIN_PRICE);
   const [maxPrice, setMaxPrice] = useState(queryMaxPrice ?? DEFAULT_MAX_PRICE);
@@ -34,13 +36,13 @@ export default function BookFilterPanel({
     queryCheckedRatings ?? []
   );
   const router = useRouter();
-
   const handleSubmitFilterOptions = () => {
     const queryUrl = buildFilterQueryRoute({
       minPrice,
       maxPrice,
       genre,
       rating: checkedRatings,
+      sort,
     });
     router.push(queryUrl);
   };
@@ -50,12 +52,15 @@ export default function BookFilterPanel({
     setMaxPrice(DEFAULT_MAX_PRICE);
     setGenre("");
     setCheckedRatings([]);
-
-    router.push("/books?page=1");
+    if (sort) {
+      router.push(`/books?page=1&sort=${sort}`);
+    } else {
+      router.push("books/?page=1");
+    }
   };
 
   return (
-    <div className=" mb-12 py-8 px-4 flex flex-col gap-y-8 bg-white h-fit shadow-md">
+    <div className="w-1/2 sm:w-full md:w-full mb-12  py-4 md:py-8 px-4 sm:px-6 md:px-8 flex flex-col sm:flex-row md:flex-col gap-x-4 md:gap-x-0 gap-y-8 bg-white h-fit shadow-md">
       <PriceRangeSelector
         minPrice={minPrice}
         maxPrice={maxPrice}

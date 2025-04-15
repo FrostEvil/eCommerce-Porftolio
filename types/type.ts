@@ -76,4 +76,9 @@ export type FiltersProps = {
   maxPrice?: number;
   genre?: BookGenre | "";
   rating?: number[];
+  sort?: string;
 };
+
+export type SortDirection = "asc" | "desc";
+
+export type SortOption = "price" | "rating";

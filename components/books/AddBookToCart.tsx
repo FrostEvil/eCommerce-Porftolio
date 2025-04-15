@@ -29,10 +29,10 @@ export default function AddBookToCart({ userId, bookId }: AddBookToCartType) {
   };
 
   return (
-    <div className="relative ">
+    <div className="relative w-full flex justify-center sm:justify-end">
       <button
         className={cn(
-          "py-1.5 px-4 bg-green-500 text-white text-sm font-semibold rounded transition duration-300",
+          "block max-w-[140px] md:max-w-[80px] lg:max-w-full w-full py-1.5 px-4 bg-green-500 text-white text-sm font-semibold rounded transition duration-300 text-center",
           loading ? "opacity-50 cursor-not-allowed" : "hover:bg-green-600"
         )}
         onClick={handleAddToCart}

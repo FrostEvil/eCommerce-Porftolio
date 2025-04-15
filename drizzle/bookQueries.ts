@@ -2,8 +2,8 @@ import "dotenv/config"; // Loads .env automatically
 import fs from "fs";
 import { db } from "./db";
 import { BookTable } from "./schema";
-import { Book, FiltersProps } from "@/types/type";
-import { and, eq, gte, lte, or, sql } from "drizzle-orm";
+import { Book, FiltersProps, SortDirection, SortOption } from "@/types/type";
+import { and, asc, desc, eq, gte, lte, or, sql } from "drizzle-orm";
 
 async function insertBooks() {
   // Read books from JSON file
@@ -34,8 +34,13 @@ export async function getFilteredBooks({
   maxPrice,
   genre,
   rating,
+  sort,
 }: FiltersProps) {
   let conditions = [];
+  let sortBy: SortOption;
+  let sortDirection: SortDirection;
+  let books;
+  const sortData = sort?.split("-");
 
   if (minPrice !== undefined) {
     conditions.push(gte(BookTable.price, minPrice.toString()));
@@ -62,13 +67,26 @@ export async function getFilteredBooks({
       );
     });
     conditions.push(or(...ratingConditions));
-    // }
   }
 
-  const books = await db
-    .select()
-    .from(BookTable)
-    .where(conditions.length > 0 ? and(...conditions) : undefined);
+  if (sortData !== undefined && sortData.length > 0) {
+    sortBy = sortData[0] as SortOption;
+    sortDirection = sortData[1] as SortDirection;
+    books = await db
+      .select()
+      .from(BookTable)
+      .where(conditions.length > 0 ? and(...conditions) : undefined)
+      .orderBy(
+        sortDirection === "asc"
+          ? asc(BookTable[sortBy])
+          : desc(BookTable[sortBy])
+      );
+  } else {
+    books = await db
+      .select()
+      .from(BookTable)
+      .where(conditions.length > 0 ? and(...conditions) : undefined);
+  }
 
   const updatedBooks = books.map((book) => ({
     ...book,

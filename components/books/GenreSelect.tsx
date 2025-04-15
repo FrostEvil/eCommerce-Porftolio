@@ -16,8 +16,10 @@ type GenreSelectProps = {
 
 export default function GenreSelect({ genre, setGenre }: GenreSelectProps) {
   return (
-    <div>
-      <h2 className="text-base font-semibold text-gray-700">Genre:</h2>
+    <div className="basis-full sm:basis-1/4">
+      <h2 className="text-sm md:text-base font-semibold text-gray-700">
+        Genre:
+      </h2>
       <div className="mt-2">
         <Select value={genre} onValueChange={(e: BookGenre) => setGenre(e)}>
           <SelectTrigger>
