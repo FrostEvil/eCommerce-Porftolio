@@ -11,11 +11,11 @@ export default async function Promotions() {
     return <PromotionsBookItem book={book} key={book.id} />;
   });
   return (
-    <section className=" py-12 px-6 container">
-      <h2 className="text-3xl font-bold text-gray-900 text-center mb-6">
+    <section className="bg-white shadow-sm">
+      <h2 className="pl-6 py-4 text-3xl text-bold text-gray-900 bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-400">
         Limited-Time Offer on Must-Reads
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ">
+      <div className="py-8 px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ">
         {displayDiscountedBooks}
       </div>
     </section>
