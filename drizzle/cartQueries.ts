@@ -25,7 +25,7 @@ export async function getCartBooks(userId: User["id"]) {
 }
 
 export async function updateCartBook(userId: User["id"], bookId: Book["id"]) {
-  if (!userId || !bookId) return;
+  if (!userId || !bookId) return false;
 
   const cartBook = await db.query.UserBookCartTable.findFirst({
     where: and(
@@ -40,7 +40,7 @@ export async function updateCartBook(userId: User["id"], bookId: Book["id"]) {
       bookId: bookId,
       amount: 1,
     });
-    return;
+    return true;
   }
   await db
     .update(UserBookCartTable)
@@ -51,5 +51,5 @@ export async function updateCartBook(userId: User["id"], bookId: Book["id"]) {
         eq(UserBookCartTable.bookId, bookId)
       )
     );
-  return;
+  return true;
 }

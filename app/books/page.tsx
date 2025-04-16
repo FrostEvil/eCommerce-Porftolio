@@ -72,7 +72,7 @@ export default async function BooksPage({
         />
 
         <div className="col-span-3 md:col-span-2 lg:col-span-3 w-full">
-          <div className="px-12 md:px-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-stretch gap-y-12">
+          <div className="px-4 md:px-0 grid gap-6 grid-cols-[repeat(auto-fit,minmax(240px,1fr))]">
             {paginatedBooks.map((book) => {
               return book ? <BookItem {...book} key={book.id} /> : "";
             })}

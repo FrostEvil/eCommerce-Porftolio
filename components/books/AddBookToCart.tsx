@@ -1,6 +1,7 @@
 "use client";
 
 import { updateCartBook } from "@/drizzle/cartQueries";
+import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { Book } from "@/types/type";
 import { User } from "next-auth";
@@ -13,32 +14,49 @@ type AddBookToCartType = {
 
 export default function AddBookToCart({ userId, bookId }: AddBookToCartType) {
   const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
 
   const handleAddToCart = async () => {
     if (!userId || !bookId) return;
 
     setLoading(true);
     try {
-      await updateCartBook(userId, bookId);
-      console.log("Successfully added book to cart");
+      const isUpdated = await updateCartBook(userId, bookId);
+      if (isUpdated) {
+        toast({
+          description: "Book added to cart!",
+        });
+      }
     } catch (error) {
       console.error("Failed to add book to cart:", error);
+      toast({
+        variant: "destructive",
+        description: "Failed to add book.",
+      });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="relative w-full flex justify-center sm:justify-end">
+    <div className="relative w-full flex justify-center sm:justify-end ">
       <button
         className={cn(
-          "block max-w-[140px] md:max-w-[80px] lg:max-w-full w-full py-1.5 px-4 bg-green-500 text-white text-sm font-semibold rounded transition duration-300 text-center",
-          loading ? "opacity-50 cursor-not-allowed" : "hover:bg-green-600"
+          " w-full py-1.5 px-4 bg-yellow-400 text-black text-sm font-semibold rounded transition duration-300 text-center",
+          loading ? "opacity-50 cursor-not-allowed" : "hover:bg-yellow-500"
         )}
         onClick={handleAddToCart}
         disabled={loading}
       >
-        {loading ? "Adding..." : "Add to Cart"}
+        Add to Cart
+        {/* {loading ? (
+          <span className="flex items-center justify-center gap-2">
+            <span className="animate-spin rounded-full border-2 border-white border-t-transparent h-4 w-4" />
+            Adding...
+          </span>
+        ) : (
+          "Add to Cart"
+        )} */}
       </button>
     </div>
   );

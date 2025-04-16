@@ -27,10 +27,12 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
-      <FeaturedBooks />
-      <Testimonials />
-      <Genres />
-      <Promotions />
+      <div className="my-12 flex flex-col gap-y-8 container">
+        <FeaturedBooks />
+        <Testimonials />
+        <Genres />
+        <Promotions />
+      </div>
     </>
   );
 }

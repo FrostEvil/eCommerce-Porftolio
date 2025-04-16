@@ -2,6 +2,7 @@ import "../style/globals.css";
 import { Merriweather } from "next/font/google";
 import Navigation from "@/components/navigation/Navigation";
 import Footer from "@/components/Footer";
+import { Toaster } from "@/components/ui/toaster";
 
 export const merriweather = Merriweather({
   weight: ["400"],
@@ -23,11 +24,12 @@ export default function RootLayout({
         />
         <link rel="icon" href="/favicon.ico" />
       </head>
-      <body className={`${merriweather.className} bg-gray-100`}>
+      <body className={`${merriweather.className} bg-blue-100`}>
         <header className="sticky top-0 z-50 bg-white shadow-md">
           <Navigation />
         </header>
         <main>{children}</main>
+        <Toaster />
         <Footer />
       </body>
     </html>
