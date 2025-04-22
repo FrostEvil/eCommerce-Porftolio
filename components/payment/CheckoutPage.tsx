@@ -115,7 +115,7 @@ export default function CheckoutPage({
           redirectTo: "/",
         }}
       >
-        <p className="text-lg text-gray-800">
+        <p className="text-base md:text-lg text-gray-800">
           Congratulations, your payment has been successfully processed! Your
           order is on its way, and we'll notify you once it's shipped.
         </p>
@@ -124,7 +124,7 @@ export default function CheckoutPage({
           <strong>email@email.com</strong>. Please check your inbox (and spam
           folder) for further details.
         </p>
-        <p className="mt-6 text-sm text-gray-500">
+        <p className="mt-6 text-xs md:text-sm text-gray-500">
           If you have any questions, feel free to contact our support team.
         </p>
       </Modal>
@@ -137,7 +137,7 @@ export default function CheckoutPage({
       {errorMessage && <div>{errorMessage}</div>}
       <button
         disabled={!stripe || loading}
-        className="text-white w-full p-5 bg-black mt-2 rounded-md font-bold disabled:opacity-50 disabled:animate-pulse"
+        className="text-base md:text-lg text-white w-full p-5 bg-black mt-2 rounded-md font-bold disabled:opacity-50 disabled:animate-pulse"
       >
         {loading ? "Processing..." : `Pay $${totalPrice.toFixed(2)}`}
       </button>

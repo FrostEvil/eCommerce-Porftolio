@@ -64,13 +64,13 @@ export default function SignUpForm() {
 
   return (
     <>
-      <form action={formAction} className="space-y-4  w-full">
+      <form action={formAction} className="space-y-4 w-full">
         {/* Email Field */}
         <div className="space-y-1">
           <label
             htmlFor="email"
             className={cn(
-              "text-sm font-semibold ",
+              "text-xs md:text-sm font-semibold ",
               showError.globalError || showError.emailError
                 ? "text-red-700"
                 : "text-gray-700"
@@ -86,14 +86,16 @@ export default function SignUpForm() {
             value={formData.email}
             onChange={handleChangeValue}
             className={cn(
-              "px-4 py-2 w-full border rounded shadow-sm transition-all duration-300 ease-in-out focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-400 outline-none",
+              "px-4 py-2 w-full border text-sm md:text-base rounded shadow-sm transition-all duration-300 ease-in-out focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-400 outline-none",
               showError.globalError || showError.emailError
                 ? "border-red-700"
                 : "border-gray-300"
             )}
           />
           {state?.emailError && showError.emailError && (
-            <p className="text-sm text-red-700">{state?.emailError[0]}</p>
+            <p className="text-xs md:text-sm text-red-700">
+              {state?.emailError[0]}
+            </p>
           )}
         </div>
 
@@ -102,7 +104,7 @@ export default function SignUpForm() {
           <label
             htmlFor="password"
             className={cn(
-              "text-sm font-semibold ",
+              "text-xs md:text-sm font-semibold ",
               showError.globalError || showError.passwordError
                 ? "text-red-700"
                 : "text-gray-700"
@@ -118,14 +120,16 @@ export default function SignUpForm() {
             value={formData.password}
             onChange={handleChangeValue}
             className={cn(
-              "px-4 py-2 w-full border  rounded shadow-sm transition-all duration-300 ease-in-out focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-400 outline-none",
+              "px-4 py-2 w-full border text-sm md:text-base rounded shadow-sm transition-all duration-300 ease-in-out focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-400 outline-none",
               showError.globalError || showError.passwordError
                 ? "border-red-700"
                 : "border-gray-300"
             )}
           />
           {state?.passwordError && showError.passwordError && (
-            <p className="text-sm text-red-700">{state?.passwordError[0]}</p>
+            <p className="text-xs md:text-sm text-red-700">
+              {state?.passwordError[0]}
+            </p>
           )}
         </div>
 
@@ -137,7 +141,7 @@ export default function SignUpForm() {
           Sign In
         </button>
         <div className="w-full overflow-hidden">
-          <p className="relative text-center before:content-[''] before:w-1/2 before:h-[1px] before:absolute before:bg-gray-400 before:top-1/2 before:-translate-y-1/2 before:-right-5 after:content-[''] after:w-1/2 after:h-[1px] after:absolute after:bg-gray-400 after:top-1/2 after:-translate-y-1/2 after:-left-5">
+          <p className="relative text-center text-sm md:text-base before:content-[''] before:w-1/2 before:h-[1px] before:absolute before:bg-gray-400 before:top-1/2 before:-translate-y-1/2 before:-right-5 after:content-[''] after:w-1/2 after:h-[1px] after:absolute after:bg-gray-400 after:top-1/2 after:-translate-y-1/2 after:-left-5">
             or
           </p>
         </div>

@@ -9,8 +9,7 @@ import {
   increaseCartBookAmount,
   removeBookFromCart,
 } from "@/actions/cart-actions";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
 
 type PropsType = {
   userId: User["id"];
@@ -27,13 +26,21 @@ export default function CartBookItemControls({
   amount,
   price,
 }: PropsType) {
-  const router = useRouter();
+  const { toast } = useToast();
+
   const handleIncreaseCartBookAmount = async () => {
     await increaseCartBookAmount(userId, bookId, amount);
+    if (amount === 10) {
+      toast({
+        description:
+          "You’ve reached the limit! You can only add up to 10 copies of this book.",
+      });
+    }
   };
 
   const handleDecreaseCartBookAmount = async () => {
     await decreaseCartBookAmount(userId, bookId, amount);
+    if (amount === 1) handleRemoveBookFromCart();
   };
 
   const handleRemoveBookFromCart = async () => {
@@ -41,34 +48,40 @@ export default function CartBookItemControls({
   };
 
   return (
-    <div className="flex items-end justify-around flex-col">
-      <div className="border border-gray-300 flex items-center justify-center ">
+    <div className="flex items-end  flex-col h-full ">
+      <div className="border border-gray-300 flex  items-center justify-center ">
         <button
-          disabled={amount === 1 ? true : false}
           onClick={handleDecreaseCartBookAmount}
           className={cn(
             "px-2 py-1 tranistion-all duration-150",
             amount === 1 ? "" : "hover:bg-gray-100 active:bg-gray-200"
           )}
         >
-          <FaMinus />
+          {amount === 1 ? (
+            <FaTrashCan className="text-gray-600 hover:text-red-500  text-sm lg:text-base" />
+          ) : (
+            <FaMinus className="text-sm lg:text-base" />
+          )}
         </button>
-        <p className="border-x px-3 ">{amount}</p>
+        <p className="border-x px-3 text-sm lg:text-base ">{amount}</p>
         <button
-          disabled={amount === MAX_AMOUNT ? true : false}
           onClick={handleIncreaseCartBookAmount}
           className={cn(
             "px-2 py-1 transition-all duration-150",
-            amount === MAX_AMOUNT ? "" : "hover:bg-gray-100 active:bg-gray-200"
+            amount === MAX_AMOUNT
+              ? "bg-gray-200"
+              : "hover:bg-gray-100 active:bg-gray-200"
           )}
         >
-          <FaPlus />
+          <FaPlus className="text-sm lg:text-base" />
         </button>
       </div>
 
-      <p className="text-xl flex-grow mt-4">{(price * amount).toFixed(2)}$</p>
-      <button onClick={handleRemoveBookFromCart} className="mb-4">
-        <FaTrashCan className="text-gray-600 text-2xl hover:text-gray-900 duration-300" />
+      <p className="text-base md:text-lg lg:text-xl  mt-4 flex-1">
+        {(price * amount).toFixed(2)}$
+      </p>
+      <button onClick={handleRemoveBookFromCart} className="text-end">
+        <FaTrashCan className=" text-gray-600 text-base md:text-xl lg:text-2xl hover:text-red-500 duration-300" />
       </button>
     </div>
   );

@@ -15,9 +15,9 @@ export default {
       center: true,
       padding: "1rem",
       screens: {
-        sm: "600px",
-        md: "728px",
-        lg: "984px",
+        // sm: "600px",
+        // md: "728px",
+        // lg: "984px",
         xl: "1200px",
       },
     },
@@ -25,11 +25,7 @@ export default {
       backgroundImage: {
         "hero-pattern": "url('../public/bg.png')",
       },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
+
       colors: {},
     },
   },
