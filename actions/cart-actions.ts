@@ -74,6 +74,7 @@ export async function removeBookFromCart(
         eq(UserBookCartTable.bookId, bookId)
       )
     );
+  revalidatePath("/cart");
 }
 
 export async function removeUserCartBook(userId: User["id"]) {

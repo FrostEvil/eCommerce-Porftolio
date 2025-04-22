@@ -67,7 +67,7 @@ export default function BookSortingPanel({
   };
   return (
     <div className="flex justify-center md:justify-end">
-      <div className="w-1/2 md:w-[260px] lg:w-[280px]">
+      <div className="w-3/5 md:w-[260px] lg:w-[274px]">
         <Select
           value={sortingContentValue}
           onValueChange={handleSelectSortingMethod}
