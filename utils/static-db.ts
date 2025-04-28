@@ -97,3 +97,31 @@ export const genresArr = [
       "Dark, thought-provoking worlds exploring futuristic societies.",
   },
 ];
+
+export const faqsArr = [
+  {
+    question: "How long does shipping take?",
+    asnwer:
+      "Shipping typically takes 3–5 business days for standard delivery. Express shipping options are also available at checkout for faster delivery.",
+  },
+  {
+    question: "Can I return a book if I'm not satisfied?",
+    asnwer:
+      "Yes! We offer a 30-day return policy. Books must be in original condition. Please visit our Returns page or contact Customer Service for assistance.",
+  },
+  {
+    question: "Do you offer international shipping?",
+    asnwer:
+      "Currently, we ship only within the United States and Canada. We are working on expanding to more countries soon!",
+  },
+  {
+    question: "How can I track my order?",
+    asnwer:
+      "Once your order ships, you'll receive a confirmation email with a tracking link. You can also track your orders anytime by logging into your account.",
+  },
+  {
+    question: "Can I preorder upcoming book releases?",
+    asnwer:
+      "Absolutely! We offer preorders for many upcoming titles. Preordered books will ship as soon as they are officially released.",
+  },
+];
