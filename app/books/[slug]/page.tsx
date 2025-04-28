@@ -1,11 +1,11 @@
 import RatingValue from "@/components/RatingValue";
 import AddBookToCart from "@/components/books/AddBookToCart";
+import GoBackButton from "@/components/books/GoBackButton";
 import { getBookById } from "@/drizzle/bookQueries";
 import { auth } from "@/lib/auth";
 import { Book } from "@/types/type";
-import { checkCurrentPage } from "@/utils/checkCurrentPage";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type ParamsType = {
   params: Promise<{ slug: Book["id"] }>;
@@ -29,7 +29,6 @@ export default async function BookPage({ params }: ParamsType) {
   } = {
     ...slugBook,
   };
-  const currentPage = checkCurrentPage(slug);
   const bookDetails = [author, genre, language, description, yearPublished];
   const bookLegend = [
     "Author",
@@ -57,7 +56,6 @@ export default async function BookPage({ params }: ParamsType) {
         <span className="text-blue-600">{title}!</span>
       </h1>
       <div className="flex flex-col md:flex-row items-center gap-8">
-        {/* Book Image */}
         <div className="relative w-full md:w-1/3 h-[456px] rounded-lg overflow-hidden shadow-lg">
           <Image
             src={coverImageUrl}
@@ -68,7 +66,6 @@ export default async function BookPage({ params }: ParamsType) {
           />
         </div>
 
-        {/* Book Details */}
         <div className="w-full md:w-2/3 bg-white p-6 rounded-lg shadow-lg">
           <div className="mb-6 gap-y-2 flex flex-col">
             {showBookDetails}
@@ -78,7 +75,6 @@ export default async function BookPage({ params }: ParamsType) {
             </div>
           </div>
 
-          {/* Price and Add to Cart */}
           <div className="flex items-center justify-between border-t pt-6">
             <p className="text-3xl font-bold text-green-600">${price}</p>
             <div className="flex items-center gap-x-3">
@@ -89,14 +85,8 @@ export default async function BookPage({ params }: ParamsType) {
           </div>
         </div>
       </div>
-      {/* Go Back Button */}
       <div className="mt-8 flex justify-end">
-        <Link
-          href={`/books?page=${currentPage}`}
-          className="text-blue-500 hover:text-blue-700 underline text-sm"
-        >
-          &larr; Go Back to Products
-        </Link>
+        <GoBackButton />
       </div>
     </main>
   );

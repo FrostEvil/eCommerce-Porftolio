@@ -26,7 +26,6 @@ export default async function BookItem(book: Book) {
     );
   return (
     <div className="relative rounded-lg shadow-md bg-white transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex flex-col w-full">
-      {/* Book Image */}
       <div className="relative w-full h-52 lg:h-56 xl:h-64 overflow-hidden">
         {book.discount && (
           <div className="absolute top-5 left-[-24px] bg-yellow-300 text-black text-base font-bold px-4 py-1 transform -rotate-45 shadow-lg border border-gray-700 z-20">
@@ -42,7 +41,6 @@ export default async function BookItem(book: Book) {
         />
       </div>
 
-      {/* Book Details */}
       <div className="group relative flex-grow p-4">
         <h2 className="font-bold whitespace-nowrap overflow-hidden text-ellipsis text-base lg:text-lg xl:text-xl text-gray-800 lg:mb-1 xl:mb-2">
           {book.title}
@@ -56,23 +54,15 @@ export default async function BookItem(book: Book) {
         <p className="text-gray-700 text-sm mb-2">
           <span className="font-semibold">Genre:</span> {book.genre}
         </p>
-        {/* Rating Display */}
+
         <div className="flex items-center gap-1 text-yellow-500 text-sm">
           <RatingValue value={book.rating} />
           <span className="text-gray-600 text-xs ml-1">({book.rating})</span>
         </div>
       </div>
 
-      {/* Actions */}
       <div className="bg-sky-50 py-2 xl:py-3 px-4 relative flex flex-col flex-wrap gap-2 items-center sm:items-start ">
-        <div className="flex items-center justify-between">
-          {/* <p className=" text-xl inline-block text-blue-800 bg-blue-100 px-3 py-1 rounded-full font-semibold">
-            {book.discount === 0
-              ? `$${book.price.toFixed(2)}`
-              : `$${(book.price * (1 - book.discount / 100)).toFixed(2)}`}
-          </p> */}
-          {bookPrice}
-        </div>
+        <div className="flex items-center justify-between">{bookPrice}</div>
         <div className="w-full flex flex-col sm:flex-row gap-y-2 gap-x-2 justify-between items-center mt-4 md:mt-6 mb-2 lg:gap-x-2">
           <Link
             href={`/books/${book.id}`}

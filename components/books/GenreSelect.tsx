@@ -30,7 +30,7 @@ export default function GenreSelect({ genre, setGenre }: GenreSelectProps) {
               return (
                 <SelectItem
                   className="text-xs"
-                  key={genre.name}
+                  key={genre.slug}
                   value={genre.name}
                 >
                   {genre.name}
