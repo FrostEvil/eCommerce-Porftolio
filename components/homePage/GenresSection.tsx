@@ -1,6 +1,5 @@
 import { genresArr } from "@/utils/static-db";
 import Link from "next/link";
-import { constants } from "vm";
 
 const GENRES_COUNT = 6;
 
@@ -13,7 +12,7 @@ export default function Genres() {
     return (
       <div key={genre.slug}>
         <Link
-          href="/books"
+          href={`/books?page=1&genre=${genre.name}`}
           className="block p-4 bg-white shadow-md text-center hover:bg-yellow-400 hover:shadow-lg hover:scale-105 transition duration-300"
         >
           <p className="text-gray-900 text-lg font-semibold">{genre.name}</p>
