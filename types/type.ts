@@ -30,6 +30,7 @@ export type Book = {
   rating: number;
   coverImageUrl: string;
   description: string;
+  discount: number;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -77,6 +78,7 @@ export type FiltersProps = {
   genre?: BookGenre | "";
   rating?: number[];
   sort?: string;
+  onSale?: boolean;
 };
 
 export type SortDirection = "asc" | "desc";

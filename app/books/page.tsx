@@ -27,6 +27,8 @@ export default async function BooksPage({
     ? [Number(rawParams.rating)]
     : undefined;
 
+  const onSale = rawParams.onSale === "true";
+
   const sort = typeof rawParams.sort === "string" ? rawParams.sort : undefined;
 
   const filteredBooks = await getFilteredBooks({
@@ -35,6 +37,7 @@ export default async function BooksPage({
     genre,
     rating,
     sort,
+    onSale,
   });
 
   const { paginatedBooks, booksAmount } = getPaginatedBooks({
@@ -47,7 +50,14 @@ export default async function BooksPage({
     pageNumber: page,
     totalPages: Math.ceil(booksAmount / PAGE_SIZE),
     hasNextPage: paginatedBooks.length === PAGE_SIZE ? true : false,
-    queryRoute: filterQuery({ minPrice, maxPrice, genre, rating, sort }),
+    queryRoute: filterQuery({
+      minPrice,
+      maxPrice,
+      genre,
+      rating,
+      sort,
+      onSale,
+    }),
   };
 
   return (
@@ -69,10 +79,11 @@ export default async function BooksPage({
           queryGenre={genre}
           queryCheckedRatings={rating}
           sort={sort}
+          onSale={onSale}
         />
 
         <div className="col-span-3 md:col-span-2 lg:col-span-3 w-full">
-          <div className="px-4 md:px-0 grid gap-6 grid-cols-[repeat(auto-fit,minmax(240px,1fr))]">
+          <div className="px-4 md:px-0 grid gap-6  grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {paginatedBooks.map((book) => {
               return book ? <BookItem {...book} key={book.id} /> : "";
             })}

@@ -91,6 +91,7 @@ export const BookTable = pgTable(
     rating: decimal("rating", { precision: 3, scale: 1 }).notNull(),
     coverImageUrl: text().notNull(),
     description: text().notNull(),
+    discount: integer().notNull(),
     createdAt: timestamp("createdAt").defaultNow().notNull(),
     updatedAt: timestamp("updatedAt").defaultNow().notNull(),
   },

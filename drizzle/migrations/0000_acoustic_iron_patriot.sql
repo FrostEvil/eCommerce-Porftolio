@@ -12,6 +12,7 @@ CREATE TABLE "books" (
 	"rating" numeric(3, 1) NOT NULL,
 	"coverImageUrl" text NOT NULL,
 	"description" text NOT NULL,
+	"discount" integer NOT NULL,
 	"createdAt" timestamp DEFAULT now() NOT NULL,
 	"updatedAt" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "yearPublished_check" CHECK ("books"."yearPublished" > 0 AND "books"."yearPublished" <= EXTRACT(YEAR FROM CURRENT_DATE)),
