@@ -28,3 +28,10 @@ export const signInFormSchema = z.object({
     .regex(/[\W_]/, "Password must contain at least one special character.")
     .regex(/[A-Z]/, "Password must contain at least one uppercase letter."),
 });
+
+export const subscriptionMailSchema = z.object({
+  email: z
+    .string()
+    .email("Invalid email address")
+    .min(5, "Email must be at least 5 characters long."),
+});
