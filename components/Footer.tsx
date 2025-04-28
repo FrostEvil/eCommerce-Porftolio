@@ -16,22 +16,23 @@ export default function Footer() {
           <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
           <ul className="space-y-2 text-gray-400">
             <li>
-              <Link href="/books" className="hover:text-yellow-400">
+              <Link href="/books?page=1" className="hover:text-yellow-400">
                 All Books
               </Link>
             </li>
             <li>
-              <Link href="/books" className="hover:text-yellow-400">
+              <Link
+                href="/books?page=1&sort=rating-desc"
+                className="hover:text-yellow-400"
+              >
                 Best Sellers
               </Link>
             </li>
             <li>
-              <Link href="/books" className="hover:text-yellow-400">
-                Genres
-              </Link>
-            </li>
-            <li>
-              <Link href="/books" className="hover:text-yellow-400">
+              <Link
+                href="/books?page=1&onSale=true"
+                className="hover:text-yellow-400"
+              >
                 Promotions
               </Link>
             </li>

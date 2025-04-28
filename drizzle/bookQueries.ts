@@ -3,7 +3,8 @@ import fs from "fs";
 import { db } from "./db";
 import { BookTable } from "./schema";
 import { Book, FiltersProps, SortDirection, SortOption } from "@/types/type";
-import { and, asc, desc, eq, gte, lte, or, sql } from "drizzle-orm";
+import { and, asc, desc, eq, gte, lte, ne, or, sql } from "drizzle-orm";
+import { discountPrice } from "@/utils/discountPrice";
 
 async function insertBooks() {
   // Read books from JSON file
@@ -34,6 +35,7 @@ export async function getFilteredBooks({
   maxPrice,
   genre,
   rating,
+  onSale,
   sort,
 }: FiltersProps) {
   let conditions = [];
@@ -43,15 +45,31 @@ export async function getFilteredBooks({
   const sortData = sort?.split("-");
 
   if (minPrice !== undefined) {
-    conditions.push(gte(BookTable.price, minPrice.toString()));
+    conditions.push(
+      sql`${BookTable.price} * (1 - ${BookTable.discount} / 100.0) >= ${minPrice}`
+    );
   }
 
   if (maxPrice !== undefined) {
-    conditions.push(lte(BookTable.price, maxPrice.toString()));
+    conditions.push(
+      sql`${BookTable.price} * (1- ${BookTable.discount} / 100.0 <= ${maxPrice})`
+    );
   }
+
+  // if (minPrice !== undefined) {
+  //   conditions.push(gte(BookTable.price, minPrice.toString()));
+  // }
+
+  // if (maxPrice !== undefined) {
+  //   conditions.push(lte(BookTable.price, maxPrice.toString()));
+  // }
 
   if (genre !== undefined && genre !== "") {
     conditions.push(eq(BookTable.genre, genre));
+  }
+
+  if (onSale) {
+    conditions.push(ne(BookTable.discount, 0));
   }
 
   if (rating !== undefined && rating.length > 0) {

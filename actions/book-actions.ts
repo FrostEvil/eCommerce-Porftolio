@@ -21,7 +21,11 @@ export async function getFeaturedBooks(take: number) {
 }
 
 export async function getDiscountedBooks(take: number) {
-  const discountedBooks = await db.select().from(BookTable).limit(take);
+  const discountedBooks = await db
+    .select()
+    .from(BookTable)
+    .orderBy(desc(BookTable.discount))
+    .limit(take);
   const updatedDiscountedBooks = discountedBooks.map((book) => ({
     ...book,
     price: parseFloat(book.price),

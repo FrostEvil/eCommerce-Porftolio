@@ -8,10 +8,31 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 
 export default async function BookItem(book: Book) {
   const session = await auth();
+
+  const bookPrice =
+    book.discount === 0 ? (
+      <p className=" text-xl inline-block text-gray-900 font-semibold">
+        ${book.price.toFixed(2)}
+      </p>
+    ) : (
+      <div className="flex items-center gap-x-2">
+        <p className=" text-xl inline-block text-red-600 font-semibold">
+          ${(book.price * (1 - book.discount / 100)).toFixed(2)}
+        </p>
+        <p className="line-through text-gray-500 text-sm">
+          {book.price.toFixed(2)}$
+        </p>
+      </div>
+    );
   return (
-    <div className="rounded-lg shadow-md bg-white transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex flex-col w-full">
+    <div className="relative rounded-lg shadow-md bg-white transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex flex-col w-full">
       {/* Book Image */}
-      <div className="relative w-full h-52 lg:h-56 xl:h-64">
+      <div className="relative w-full h-52 lg:h-56 xl:h-64 overflow-hidden">
+        {book.discount && (
+          <div className="absolute top-5 left-[-24px] bg-yellow-300 text-black text-base font-bold px-4 py-1 transform -rotate-45 shadow-lg border border-gray-700 z-20">
+            -{book.discount}% OFF
+          </div>
+        )}
         <Image
           src={book.coverImageUrl}
           alt={book.title}
@@ -45,9 +66,12 @@ export default async function BookItem(book: Book) {
       {/* Actions */}
       <div className="bg-sky-50 py-2 xl:py-3 px-4 relative flex flex-col flex-wrap gap-2 items-center sm:items-start ">
         <div className="flex items-center justify-between">
-          <p className=" text-xl inline-block text-blue-800 bg-blue-100 px-3 py-1 rounded-full font-semibold">
-            ${book.price}
-          </p>
+          {/* <p className=" text-xl inline-block text-blue-800 bg-blue-100 px-3 py-1 rounded-full font-semibold">
+            {book.discount === 0
+              ? `$${book.price.toFixed(2)}`
+              : `$${(book.price * (1 - book.discount / 100)).toFixed(2)}`}
+          </p> */}
+          {bookPrice}
         </div>
         <div className="w-full flex flex-col sm:flex-row gap-y-2 gap-x-2 justify-between items-center mt-4 md:mt-6 mb-2 lg:gap-x-2">
           <Link

@@ -15,7 +15,7 @@ export default function Pagination({ ...paginationProps }: PaginationProps) {
           "rounded-md border border-gray-300 px-2 md:px-3 py-1 md:py-2 text-xs md:text-sm font-medium hover:bg-blue-300 duration-200",
           currentPage === 1 ? "pointer-events-none bg-gray-300" : "bg-blue-200"
         )}
-        href={`/books?page=${currentPage - 1}&${queryRoute}`}
+        href={`/books?page=${currentPage - 1}${queryRoute}`}
       >
         Previous
       </Link>
@@ -35,7 +35,7 @@ export default function Pagination({ ...paginationProps }: PaginationProps) {
               i === 0 ? "rounded-l-md" : "",
               i === pages.length - 1 ? "rounded-r-md" : ""
             )}
-            href={`/books?page=${p}&${queryRoute}`}
+            href={`/books?page=${p}${queryRoute}`}
           >
             {p}
           </Link>
@@ -47,7 +47,7 @@ export default function Pagination({ ...paginationProps }: PaginationProps) {
           "rounded-md border border-gray-300 px-2 md:px-3 py-1 md:py-2 text-xs md:text-sm  font-medium hover:bg-blue-300 duration-200",
           !hasNextPage ? "pointer-events-none bg-gray-300" : "bg-blue-200"
         )}
-        href={`/books?page=${currentPage + 1}&${queryRoute}`}
+        href={`/books?page=${currentPage + 1}${queryRoute}`}
       >
         Next
       </Link>

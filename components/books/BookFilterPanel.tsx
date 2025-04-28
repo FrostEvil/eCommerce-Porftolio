@@ -1,14 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { buildFilterQueryRoute } from "@/utils/buildFilterQuery";
 import PriceRangeSelector from "./PriceRangeSelector";
 import RatingCheckboxGroup from "./RatingCheckboxGroup";
 import GenreSelect from "./GenreSelect";
 import FilterButtons from "./FilterButtons";
 import { BookGenre } from "@/types/type";
+import { CheckboxWithText } from "./CheckboxWithText";
 
 const DEFAULT_MIN_PRICE = 0;
 const DEFAULT_MAX_PRICE = 299;
@@ -20,6 +20,7 @@ type BookFilterPanelProps = {
   queryGenre?: BookGenre | "";
   queryCheckedRatings?: number[];
   sort?: string;
+  onSale?: boolean;
 };
 
 export default function BookFilterPanel({
@@ -28,6 +29,7 @@ export default function BookFilterPanel({
   queryGenre,
   queryCheckedRatings,
   sort,
+  onSale,
 }: BookFilterPanelProps) {
   const [minPrice, setMinPrice] = useState(queryMinPrice ?? DEFAULT_MIN_PRICE);
   const [maxPrice, setMaxPrice] = useState(queryMaxPrice ?? DEFAULT_MAX_PRICE);
@@ -35,7 +37,11 @@ export default function BookFilterPanel({
   const [checkedRatings, setCheckedRatings] = useState<number[]>(
     queryCheckedRatings ?? []
   );
+  const [isOnSaleChecked, setIsOnSaleChecked] = useState<boolean>(
+    onSale ? onSale : false
+  );
   const router = useRouter();
+
   const handleSubmitFilterOptions = () => {
     const queryUrl = buildFilterQueryRoute({
       minPrice,
@@ -43,6 +49,7 @@ export default function BookFilterPanel({
       genre,
       rating: checkedRatings,
       sort,
+      onSale: isOnSaleChecked,
     });
     router.push(queryUrl);
   };
@@ -52,6 +59,7 @@ export default function BookFilterPanel({
     setMaxPrice(DEFAULT_MAX_PRICE);
     setGenre("");
     setCheckedRatings([]);
+    setIsOnSaleChecked(false);
     if (sort) {
       router.push(`/books?page=1&sort=${sort}`);
     } else {
@@ -75,6 +83,10 @@ export default function BookFilterPanel({
         setCheckedRatings={setCheckedRatings}
       />
       <GenreSelect genre={genre} setGenre={setGenre} />
+      <CheckboxWithText
+        isOnSaleChecked={isOnSaleChecked}
+        setIsOnSaleChecked={setIsOnSaleChecked}
+      />
       <FilterButtons
         submitFilterOptions={handleSubmitFilterOptions}
         clearFilterOptions={handleClearFilterOptions}

@@ -26,5 +26,5 @@ export const filterQuery = (filters: FiltersProps) => {
     }
   });
 
-  return params.toString();
+  return `&${params.toString()}`;
 };

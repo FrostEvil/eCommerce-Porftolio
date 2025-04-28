@@ -1,5 +1,5 @@
 {
-  "id": "b119cca0-4198-4e40-83e2-32f83d1eb4c3",
+  "id": "9d67a75d-8ad5-4f49-94c6-bd22f82bf22b",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -66,6 +66,12 @@
         "description": {
           "name": "description",
           "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "discount": {
+          "name": "discount",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
