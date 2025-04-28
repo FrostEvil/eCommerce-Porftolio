@@ -43,22 +43,34 @@ export default function Footer() {
           <h3 className="text-lg font-semibold mb-3">Customer Service</h3>
           <ul className="space-y-2 text-gray-400">
             <li>
-              <Link href="/" className="hover:text-yellow-400">
+              <Link
+                href="/customer-service#faq"
+                className="hover:text-yellow-400"
+              >
                 FAQs
               </Link>
             </li>
             <li>
-              <Link href="/" className="hover:text-yellow-400">
+              <Link
+                href="/customer-service#shipping-returns"
+                className="hover:text-yellow-400"
+              >
                 Shipping & Returns
               </Link>
             </li>
             <li>
-              <Link href="/" className="hover:text-yellow-400">
+              <Link
+                href="/customer-service#privacy-policy"
+                className="hover:text-yellow-400"
+              >
                 Privacy Policy
               </Link>
             </li>
             <li>
-              <Link href="/" className="hover:text-yellow-400">
+              <Link
+                href="/customer-service#terms-of-service"
+                className="hover:text-yellow-400"
+              >
                 Terms of Service
               </Link>
             </li>

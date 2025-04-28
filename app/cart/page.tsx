@@ -12,11 +12,11 @@ export default async function CartPage() {
   if (!userCartBooks) return;
   return (
     <main className="container mx-auto px-6 py-12 ">
-      <div>
-        <h1 className="text-4xl font-bold text-center text-gray-900 mb-8">
+      <div className="text-center my-12">
+        <h1 className="text-2xl md:text-4xl  font-extrabold text-gray-900">
           LitStore Cart Summary – Let’s Complete Your Library!
         </h1>
-        <p className="text-2xl text-center text-gray-700 mb-6">
+        <p className="mt-4 text-base lg:text-lg text-gray-600">
           Almost there! Update your cart and get ready for your next great read.
         </p>
       </div>

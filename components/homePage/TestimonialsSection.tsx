@@ -20,7 +20,7 @@ export default function Testimonials() {
   });
   return (
     <section className="bg-white shadow-sm overflow-hidden">
-      <h2 className=" pl-6 py-4 bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-400 text-3xl font-bold text-gray-900 ">
+      <h2 className=" pl-6 py-4 bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-400 text-3xl font-bold text-gray-900">
         What Our Readers Think
       </h2>
       <div className="py-8 px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">

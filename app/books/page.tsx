@@ -63,7 +63,7 @@ export default async function BooksPage({
   return (
     <main className="container">
       <div className="text-center my-12">
-        <h1 className="text-2xl md:text-4xl lg:text-5xl font-extrabold text-gray-900">
+        <h1 className="text-2xl md:text-4xl  font-extrabold text-gray-900">
           Discover Your Next <span className="text-blue-500">Great Read!</span>
         </h1>
         <p className="mt-4 text-base lg:text-lg text-gray-600">
