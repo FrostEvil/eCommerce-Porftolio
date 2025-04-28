@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FaFacebook, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
+import Subscription from "./footer/Subscription";
 
 export default function Footer() {
   return (
@@ -113,17 +114,7 @@ export default function Footer() {
               <FaYoutube />
             </a>
           </div>
-          <p className="mt-4 text-sm">Subscribe to our newsletter</p>
-          <div className="mt-2 flex">
-            <input
-              type="email"
-              placeholder="Your email"
-              className="p-2 w-full text-black rounded-l-md"
-            />
-            <button className="bg-yellow-400 text-black px-4 py-2 rounded-r-md hover:bg-yellow-500">
-              Subscribe
-            </button>
-          </div>
+          <Subscription />
         </div>
       </div>
 
