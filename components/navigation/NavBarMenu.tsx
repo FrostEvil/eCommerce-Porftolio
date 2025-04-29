@@ -37,7 +37,6 @@ export default function NavBarMenu({ session }: { session: Session | null }) {
       document.body.classList.remove("overflow-y-hidden");
     }
 
-    // Cleanup function to remove the class when the component unmounts
     return () => {
       document.body.classList.remove("overflow-y-hidden");
     };
@@ -56,7 +55,7 @@ export default function NavBarMenu({ session }: { session: Session | null }) {
     }
     return (
       <button
-        className="absolute right-2 top-2  md:hidden"
+        className="absolute right-2 top-1  md:hidden"
         onClick={() => setIsShow(true)}
       >
         <CiMenuFries size={32} />
@@ -80,7 +79,15 @@ export default function NavBarMenu({ session }: { session: Session | null }) {
           )}
         >
           {navigationLinks.map((link) => {
-            return <NavLink key={link.href} {...link} session={session} />;
+            return (
+              <NavLink
+                key={link.href}
+                {...link}
+                session={session}
+                isShow={isShow}
+                setIsShow={setIsShow}
+              />
+            );
           })}
           <li>
             <AccountNavgation session={session} />

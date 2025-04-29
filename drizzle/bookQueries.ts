@@ -4,7 +4,7 @@ import { db } from "./db";
 import { BookTable } from "./schema";
 import { Book, FiltersProps, SortDirection, SortOption } from "@/types/type";
 import { and, asc, desc, eq, gte, lte, ne, or, sql } from "drizzle-orm";
-import { discountPrice } from "@/utils/discountPrice";
+import { normalizeBookFields } from "@/utils/normalizeBookFields";
 
 async function insertBooks() {
   // Read books from JSON file
@@ -52,18 +52,9 @@ export async function getFilteredBooks({
 
   if (maxPrice !== undefined) {
     conditions.push(
-      sql`${BookTable.price} * (1- ${BookTable.discount} / 100.0 <= ${maxPrice})`
+      sql`${BookTable.price} * (1- ${BookTable.discount} / 100.0) <= ${maxPrice}`
     );
   }
-
-  // if (minPrice !== undefined) {
-  //   conditions.push(gte(BookTable.price, minPrice.toString()));
-  // }
-
-  // if (maxPrice !== undefined) {
-  //   conditions.push(lte(BookTable.price, maxPrice.toString()));
-  // }
-
   if (genre !== undefined && genre !== "") {
     conditions.push(eq(BookTable.genre, genre));
   }
@@ -90,13 +81,19 @@ export async function getFilteredBooks({
   if (sortData !== undefined && sortData.length > 0) {
     sortBy = sortData[0] as SortOption;
     sortDirection = sortData[1] as SortDirection;
+    const priceWithDisount = sql`${BookTable.price} * (1 - ${BookTable.discount} / 100.0)`;
+
     books = await db
       .select()
       .from(BookTable)
       .where(conditions.length > 0 ? and(...conditions) : undefined)
       .orderBy(
         sortDirection === "asc"
-          ? asc(BookTable[sortBy])
+          ? sortBy === "price"
+            ? asc(priceWithDisount)
+            : asc(BookTable[sortBy])
+          : sortBy === "price"
+          ? desc(priceWithDisount)
           : desc(BookTable[sortBy])
       );
   } else {
@@ -106,13 +103,7 @@ export async function getFilteredBooks({
       .where(conditions.length > 0 ? and(...conditions) : undefined);
   }
 
-  const updatedBooks = books.map((book) => ({
-    ...book,
-    price: parseFloat(book.price),
-    rating: parseFloat(book.rating),
-  }));
-
-  return updatedBooks;
+  return normalizeBookFields(books);
 }
 
 export async function getBooksCount() {
@@ -129,13 +120,7 @@ export async function getFilteredBooksWithPagination(
 ) {
   const books = await db.select().from(BookTable).offset(skip).limit(take);
 
-  const updatedBooks = books.map((book) => ({
-    ...book,
-    price: parseFloat(book.price),
-    rating: parseFloat(book.rating),
-  }));
-
-  return updatedBooks;
+  return normalizeBookFields(books);
 }
 
 export async function getBookById(id: Book["id"]) {
@@ -145,11 +130,5 @@ export async function getBookById(id: Book["id"]) {
 
   if (!book) return;
 
-  const updatedBook = {
-    ...book,
-    price: parseFloat(book.price),
-    rating: parseFloat(book.rating),
-  };
-
-  return updatedBook;
+  return normalizeBookFields(book);
 }

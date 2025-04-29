@@ -49,7 +49,10 @@ export default async function BooksPage({
   const paginationProps = {
     pageNumber: page,
     totalPages: Math.ceil(booksAmount / PAGE_SIZE),
-    hasNextPage: paginatedBooks.length === PAGE_SIZE ? true : false,
+    hasNextPage:
+      Array.isArray(paginatedBooks) && paginatedBooks.length === PAGE_SIZE
+        ? true
+        : false,
     queryRoute: filterQuery({
       minPrice,
       maxPrice,
@@ -84,9 +87,13 @@ export default async function BooksPage({
 
         <div className="col-span-3 md:col-span-2 lg:col-span-3 w-full">
           <div className="px-4 md:px-0 grid gap-6  grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {paginatedBooks.map((book) => {
-              return book ? <BookItem {...book} key={book.id} /> : "";
-            })}
+            {Array.isArray(paginatedBooks) ? (
+              paginatedBooks.map((book) => {
+                return <BookItem {...book} key={book.id} />;
+              })
+            ) : (
+              <BookItem {...paginatedBooks} />
+            )}
           </div>
           {booksAmount <= PAGE_SIZE ? (
             <div className="mt-16"></div>

@@ -5,11 +5,19 @@ const TAKE: number = 4;
 
 export default async function FeaturedBooks() {
   const books = await getFeaturedBooks(TAKE);
-  if (!books) return;
 
-  const FeaturedBooksItems = books.map((book) => {
-    return <FeaturedBookItem book={book} key={book.id} />;
-  });
+  if (!books || books.length === 0) {
+    return (
+      <div className="bg-white shadow-sm p-6 text-center">
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">
+          Trending Reads
+        </h2>
+        <p className="text-gray-600">
+          No featured books available at the moment. Please check back later!
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className=" bg-white shadow-sm overflow-hidden">
@@ -18,7 +26,9 @@ export default async function FeaturedBooks() {
       </h2>
 
       <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6  overflow-hidden bg-white">
-        {FeaturedBooksItems}
+        {books.map((book) => {
+          return <FeaturedBookItem book={book} key={book.id} />;
+        })}
       </div>
     </div>
   );
