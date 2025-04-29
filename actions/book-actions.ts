@@ -2,6 +2,7 @@
 
 import { db } from "@/drizzle/db";
 import { BookTable } from "@/drizzle/schema";
+import { normalizeBookFields } from "@/utils/normalizeBookFields";
 import { desc } from "drizzle-orm";
 
 export async function getFeaturedBooks(take: number) {
@@ -11,13 +12,7 @@ export async function getFeaturedBooks(take: number) {
     .orderBy(desc(BookTable.rating))
     .limit(take);
 
-  const updatedFeaturedBooks = featuredBooks.map((book) => ({
-    ...book,
-    price: parseFloat(book.price),
-    rating: parseFloat(book.rating),
-  }));
-
-  return updatedFeaturedBooks;
+  return normalizeBookFields(featuredBooks);
 }
 
 export async function getDiscountedBooks(take: number) {
@@ -26,10 +21,6 @@ export async function getDiscountedBooks(take: number) {
     .from(BookTable)
     .orderBy(desc(BookTable.discount))
     .limit(take);
-  const updatedDiscountedBooks = discountedBooks.map((book) => ({
-    ...book,
-    price: parseFloat(book.price),
-    rating: parseFloat(book.rating),
-  }));
-  return updatedDiscountedBooks;
+
+  return normalizeBookFields(discountedBooks);
 }

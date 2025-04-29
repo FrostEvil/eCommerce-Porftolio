@@ -7,10 +7,6 @@ import { ChangeEvent, useState } from "react";
 export default function Subscription() {
   const [inputValue, setInputValue] = useState("");
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const validationResult = subscriptionMailSchema.safeParse({
@@ -31,6 +27,7 @@ export default function Subscription() {
       });
     }
   };
+
   return (
     <>
       <p className="mt-4 text-sm">Subscribe to our newsletter</p>
@@ -40,7 +37,9 @@ export default function Subscription() {
             type="email"
             placeholder="Your email"
             value={inputValue}
-            onChange={handleChange}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setInputValue(e.target.value)
+            }
             className="p-2 w-full text-black rounded-l-md"
           />
           <button

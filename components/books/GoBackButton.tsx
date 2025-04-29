@@ -9,7 +9,7 @@ export default function GoBackButton() {
       onClick={() => router.back()}
       className="text-blue-500 hover:text-blue-700 underline text-sm"
     >
-      &larr; Click here to go back
+      &larr; Go back
     </button>
   );
 }

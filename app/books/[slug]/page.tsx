@@ -5,7 +5,6 @@ import { getBookById } from "@/drizzle/bookQueries";
 import { auth } from "@/lib/auth";
 import { Book } from "@/types/type";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 
 type ParamsType = {
   params: Promise<{ slug: Book["id"] }>;
@@ -26,6 +25,7 @@ export default async function BookPage({ params }: ParamsType) {
     coverImageUrl,
     rating,
     price,
+    discount,
   } = {
     ...slugBook,
   };
@@ -76,7 +76,18 @@ export default async function BookPage({ params }: ParamsType) {
           </div>
 
           <div className="flex items-center justify-between border-t pt-6">
-            <p className="text-3xl font-bold text-green-600">${price}</p>
+            {discount === 0 ? (
+              <p className="text-3xl font-bold text-green-600">${price}</p>
+            ) : (
+              <div className="flex items-center gap-x-2">
+                <p className=" text-3xl  text-red-600 font-bold">
+                  ${(price * (1 - discount / 100)).toFixed(2)}
+                </p>
+                <p className="line-through text-gray-500 text-base">
+                  {price.toFixed(2)}$
+                </p>
+              </div>
+            )}
             <div className="flex items-center gap-x-3">
               {session && (
                 <AddBookToCart bookId={slug} userId={session.user.id} />
