@@ -17,8 +17,6 @@ export default function AddBookToCart({ userId, bookId }: AddBookToCartType) {
   const { toast } = useToast();
 
   const handleAddToCart = async () => {
-    if (!userId || !bookId) return;
-
     setLoading(true);
     try {
       const isUpdated = await updateCartBook(userId, bookId);
@@ -49,16 +47,7 @@ export default function AddBookToCart({ userId, bookId }: AddBookToCartType) {
         disabled={loading}
       >
         Add to Cart
-        {/* {loading ? (
-          <span className="flex items-center justify-center gap-2">
-            <span className="animate-spin rounded-full border-2 border-white border-t-transparent h-4 w-4" />
-            Adding...
-          </span>
-        ) : (
-          "Add to Cart"
-        )} */}
       </button>
     </div>
   );
 }
-//TODO: GROUP
