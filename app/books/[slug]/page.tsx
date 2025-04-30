@@ -13,8 +13,23 @@ type ParamsType = {
 export default async function BookPage({ params }: ParamsType) {
   const session = await auth();
   const slug = (await params).slug;
-  const slugBook = await getBookById(slug);
-  if (!slugBook) return;
+  const slugBook = (await getBookById(slug)) as Book;
+  if (!slugBook) {
+    return (
+      <section className="container mx-auto px-6 py-12">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-gray-800 mb-4">
+            Book not found
+          </h2>
+          <p className="text-gray-600 mb-6">
+            We couldn't find the book you're looking for. It may have been
+            removed or the link is incorrect.
+          </p>
+          <GoBackButton />
+        </div>
+      </section>
+    );
+  }
   const {
     title,
     author,
@@ -38,17 +53,6 @@ export default async function BookPage({ params }: ParamsType) {
     "YearPublished",
   ];
 
-  const showBookDetails = bookDetails.map((detail, i) => {
-    return (
-      <p className="text-lg" key={detail}>
-        <span className="font-semibold text-gray-800">
-          {bookLegend[i]}:&nbsp;
-        </span>
-        {detail}
-      </p>
-    );
-  });
-
   return (
     <main className="container mx-auto px-6 py-12">
       <h1 className="text-4xl font-bold text-center text-gray-900 mb-8">
@@ -68,7 +72,16 @@ export default async function BookPage({ params }: ParamsType) {
 
         <div className="w-full md:w-2/3 bg-white p-6 rounded-lg shadow-lg">
           <div className="mb-6 gap-y-2 flex flex-col">
-            {showBookDetails}
+            {bookDetails.map((detail, i) => {
+              return (
+                <p className="text-lg" key={detail}>
+                  <span className="font-semibold text-gray-800">
+                    {bookLegend[i]}:&nbsp;
+                  </span>
+                  {detail}
+                </p>
+              );
+            })}
             <div className="flex items-center gap-1 text-yellow-500 text-lg">
               <RatingValue value={rating} />
               <span className="text-gray-600 text-base ml-1">({rating})</span>
